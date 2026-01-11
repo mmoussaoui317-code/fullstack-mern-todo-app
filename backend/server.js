@@ -27,10 +27,13 @@ app.get('/', (req, res) => {
 });
 
 // 🔐 Authentication Route (سيكون في اليوم القادم)
-app.post('/api/auth/register', (req, res) => {
-    // Tomorrow's task
-    res.json({ message: 'Register endpoint' });
-});
+app.use('/api/auth', require("./routes/auth"))
+    
+//     (req, res) => {
+//     // Tomorrow's task
+//     await require("./routes/auth");
+//     res.json({ message: 'Register endpoint' });
+// });
 
 // ⚡ Server Start
 const PORT = process.env.PORT || 5000;

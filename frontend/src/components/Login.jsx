@@ -1,0 +1,68 @@
+//  frontend/src/components/Login.js
+import React, { useState } from 'react';
+import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import axios from 'axios';
+
+const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:5000/api/auth/login', {
+                email,
+                password
+            });
+            console.log('Login successful:', response.data);
+            alert('Login successful! Check console for token');
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('Login failed!');
+        }
+    };
+
+    return (
+        <Container maxWidth="xs">
+            <Box sx={{ mt: 8, p: 3, boxShadow: 3, borderRadius: 2 }}>
+                <Typography variant="h5" align="center" gutterBottom>
+                    Login to Todo App
+                </Typography>
+                <form onSubmit={handleSubmit}>
+                    <TextField
+                        fullWidth
+                        label="Email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        margin="normal"
+                        required
+                    />
+                    <TextField
+                        fullWidth
+                        label="Password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        margin="normal"
+                        required
+                    />
+                    <Button
+                        fullWidth
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        Login
+                    </Button>
+                </form>
+                <Typography variant="body2" align="center">
+                    Demo: Use any email/password for now
+                </Typography>
+            </Box>
+        </Container>
+    );
+};
+
+export default Login;

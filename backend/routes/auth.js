@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 // Register Route
-router.post('/register', (req, res) => {
+router.route('/register').post(async (req, res) => {
     const { username, email, password } = req.body;
     // TODO: Add validation
-    res.json({ 
+    res.status(200).json({ 
         success: true, 
         message: 'User registered successfully',
         user: { username, email }
