@@ -2,7 +2,7 @@ export const sanitizeUserInput = (input) => {
     if (!input) return '';
     
     // إزالة الأحرف الخطرة
-    const dangerousChars = /[<>'"&;()]/g;
+    const dangerousChars = /[<>'"&;()|/{}]/g;
     let sanitized = input.replace(dangerousChars, '');
     
     // تحديد الطول
@@ -12,13 +12,4 @@ export const sanitizeUserInput = (input) => {
     sanitized = sanitized.trim();
     
     return sanitized;
-};
-
-// استخدامه في React Component
-import { sanitizeUserInput } from './utils/inputSanitizer';
-
-const handleInputChange = (e) => {
-    const rawInput = e.target.value;
-    const cleanInput = sanitizeUserInput(rawInput);
-    setInput(cleanInput);
 };

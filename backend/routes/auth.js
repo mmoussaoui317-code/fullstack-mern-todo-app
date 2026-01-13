@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const validate = require("../middleware/validation")
 
 // Register Route
 router.route('/register').post(async (req, res) => {
     const { username, email, password } = req.body;
+    console.log(validate(username))
     // TODO: Add validation
     res.status(200).json({ 
         success: true, 
@@ -15,6 +17,7 @@ router.route('/register').post(async (req, res) => {
 // Login Route  
 router.post('/login', (req, res) => {
     const { email, password } = req.body;
+    console.log(validate(email))
     // TODO: Add authentication
     res.json({ 
         success: true, 

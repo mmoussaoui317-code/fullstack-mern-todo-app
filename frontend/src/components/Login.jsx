@@ -1,7 +1,8 @@
-//  frontend/src/components/Login.js
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import axios from 'axios';
+import { sanitizeUserInput } from '../utils/inputSanitizer';
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -14,11 +15,23 @@ const Login = () => {
                 email,
                 password
             });
+            console.log(email, password);
             console.log('Login successful:', response.data);
             alert('Login successful! Check console for token');
         } catch (error) {
             console.error('Login error:', error);
             alert('Login failed!');
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const rawInput = e.target.value;
+        const cleanInput = sanitizeUserInput(rawInput);
+        // setInput(cleanInput);
+        if(e.target.type.toLowerCase() == "email") {
+            setEmail(cleanInput);
+        } else if(e.target.type.toLowerCase() == "password") {
+            setPassword(cleanInput)
         }
     };
 
@@ -34,7 +47,8 @@ const Login = () => {
                         label="Email"
                         type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        // onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleInputChange}
                         margin="normal"
                         required
                     />
@@ -43,7 +57,8 @@ const Login = () => {
                         label="Password"
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        // onChange={(e) => setPassword(e.target.value)}
+                        onChange={handleInputChange}
                         margin="normal"
                         required
                     />

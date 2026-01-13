@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-// ❌ الطريقة الخطرة (لا تستخدمها أبداً)
-const dangerousQuery = (userInput) => {
-    // هذا عرضة لـ SQL Injection
-    const query = `SELECT * FROM users WHERE username = '${userInput}'`;
-    return query;
-};
+// // ❌ الطريقة الخطرة (لا تستخدمها أبداً)
+// const dangerousQuery = (userInput) => {
+//     // هذا عرضة لـ SQL Injection
+//     const query = `SELECT * FROM users WHERE username = '${userInput}'`;
+//     return query;
+// };
 
 // ✅ الطريقة الآمنة مع Mongoose
 const safeQuery = async (userInput) => {

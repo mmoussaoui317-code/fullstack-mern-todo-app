@@ -1,5 +1,3 @@
-// ```javascript
-// backend/server.js - ضعه في مشروعك
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -26,7 +24,7 @@ app.get('/', (req, res) => {
     res.json({ message: 'MERN Todo API is running!' });
 });
 
-// 🔐 Authentication Route (سيكون في اليوم القادم)
+// 🔐 Authentication Route
 app.use('/api/auth', require("./routes/auth"))
     
 //     (req, res) => {
