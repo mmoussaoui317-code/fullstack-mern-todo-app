@@ -1,14 +1,14 @@
 export const sanitizeUserInput = (input) => {
     if (!input) return '';
     
-    // إزالة الأحرف الخطرة
+    // replace the operators can used in injections
     const dangerousChars = /[<>'"&;()|/{}]/g;
     let sanitized = input.replace(dangerousChars, '');
     
-    // تحديد الطول
+    // specify the long or len of the value
     sanitized = sanitized.substring(0, 100);
     
-    // إزالة المسافات الزائدة
+    // Delete the spaces from right and left the value
     sanitized = sanitized.trim();
     
     return sanitized;

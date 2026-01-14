@@ -15,8 +15,8 @@ const Login = () => {
                 email,
                 password
             });
-            console.log(email, password);
-            console.log('Login successful:', response.data);
+            // console.log(email, password);
+            // console.log('Login successful:', response.data);
             alert('Login successful! Check console for token');
         } catch (error) {
             console.error('Login error:', error);
@@ -27,7 +27,6 @@ const Login = () => {
     const handleInputChange = (e) => {
         const rawInput = e.target.value;
         const cleanInput = sanitizeUserInput(rawInput);
-        // setInput(cleanInput);
         if(e.target.type.toLowerCase() == "email") {
             setEmail(cleanInput);
         } else if(e.target.type.toLowerCase() == "password") {
@@ -47,7 +46,6 @@ const Login = () => {
                         label="Email"
                         type="email"
                         value={email}
-                        // onChange={(e) => setEmail(e.target.value)}
                         onChange={handleInputChange}
                         margin="normal"
                         required
@@ -57,7 +55,6 @@ const Login = () => {
                         label="Password"
                         type="password"
                         value={password}
-                        // onChange={(e) => setPassword(e.target.value)}
                         onChange={handleInputChange}
                         margin="normal"
                         required

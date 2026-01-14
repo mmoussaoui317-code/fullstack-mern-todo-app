@@ -26,12 +26,6 @@ app.get('/', (req, res) => {
 
 // 🔐 Authentication Route
 app.use('/api/auth', require("./routes/auth"))
-    
-//     (req, res) => {
-//     // Tomorrow's task
-//     await require("./routes/auth");
-//     res.json({ message: 'Register endpoint' });
-// });
 
 // ⚡ Server Start
 const PORT = process.env.PORT || 5000;
@@ -39,5 +33,3 @@ app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`📡 API: http://localhost:${PORT}`);
 });
-
-// ```

@@ -8,7 +8,11 @@
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["mern", "todo", "security"],
+  "keywords": [
+    "mern",
+    "todo",
+    "security"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
@@ -16,6 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
     "express-validator": "^6.15.0",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
