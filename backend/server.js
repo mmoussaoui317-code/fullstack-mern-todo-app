@@ -1,5 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 require('dotenv').config();
@@ -11,13 +11,13 @@ app.use(helmet()); // حماية Headers
 app.use(cors()); // تفعيل CORS
 app.use(express.json()); // تفعيل JSON parsing
 
-// 📦 Database Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todoapp', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log('✅ MongoDB Connected'))
-.catch(err => console.log('❌ MongoDB Error:', err));
+// // 📦 Database Connection
+
+// .then(() => console.log('✅ MongoDB Connected'))
+// .catch(err => console.log('❌ MongoDB Error:', err));
+const connectDB = require("./config/database");
+
+connectDB();
 
 // 🚀 Basic Route (للاختبار)
 app.get('/', (req, res) => {
