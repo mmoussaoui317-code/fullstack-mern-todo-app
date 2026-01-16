@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 const {userModule, useModule} = require("../module/User");
 const { generateToken } = require("../utils/jwtUtils");
-const { registerValidation } = require("../middleware/validation");
-const { validate } = require("../middleware/validation");
-const { Suspense } = require('react');
-
+// const { registerValidation } = require("../middleware/validation");
+// const { validate } = require("../middleware/validation");
+// const { Suspense } = require('react');
 // const asyncHandler = require("express-async-handler");
 // const bcrypt = require("bcryptjs");
 // const validate = require("../middleware/validation");
@@ -58,7 +57,6 @@ router.post('/login', async (req, res) => {
     try{
     const { email, password } = req.body;
         // TODO: Add authentication
-        
 
         const user = await userModule.findOne({email: email}).select('+password');
 

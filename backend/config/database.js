@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const connectDB = async () => {
 
     try {
-        mongoose.connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
+        const conn = await mongoose.connect(process.env.MONGODB_URI , {
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true
         });
         
         console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
@@ -13,6 +13,7 @@ const connectDB = async () => {
 
         const collections = await mongoose.connection.db.listCollections().toArray();
         console.log(`📁 Collections: ${collections.map(c => c.name).join(', ') || 'None yet'}`);
+        
     } catch(error) {
         console.log('❌ MongoDB Connection Error:', error.message);
         process.exit(1);
