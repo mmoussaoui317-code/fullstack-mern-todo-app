@@ -22,9 +22,10 @@ const Register = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        const cleanValue = sanitizeUserInput(value);
         setFormData(prev => ({
             ...prev,
-            [name]: value
+            [name]: cleanValue
         }));
         // Clear error when user starts typing
         if (errors[name]) {
