@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Jwt = require("jsonwebtoken");
+// const Jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs/dist/bcrypt");
 
 const userSchema = mongoose.Schema({
@@ -34,7 +34,7 @@ const userSchema = mongoose.Schema({
         timestamps: true,
         index: false,
         versionKey: false
-     }
+    }
 );
 
 userSchema.pre('save', async function(next) {
@@ -42,7 +42,7 @@ userSchema.pre('save', async function(next) {
         return next();
 
     try {
-        const salt = await bcrypt.hash(this.password, salt);
+        this.password = await bcrypt.hash(this.password, 10);
         next();
     } catch(error) {
         next(error);
@@ -53,14 +53,20 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 }
 
-userSchema.methods.generateJWT = function() {
-    return Jwt.sign({id: this._id, isAdmin: this.isAdmin}, process.env.JWT_SECRET);
-}
 
-const useModule = mongoose.model("User", userSchema);
+/**
+ * this method generateJWT create before added file JwtUtils
+ *  this file contain the same function 
+ * so this commented to because i don't need more
+ */
+// userSchema.methods.generateJWT = function() {
+//     return Jwt.sign({id: this._id, isAdmin: this.isAdmin}, process.env.JWT_SECRET);
+// }
 
+// const generateToken = (userId) => {
+//     return jwt.sign({id: userId}, process.env.JWT_SECRET, {expiresIn: "1h"})
+// }
 
+const User = mongoose.model("User", userSchema);
 
-module.exports = {
-    useModule
-}
+module.exports = User

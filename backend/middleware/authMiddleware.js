@@ -1,8 +1,8 @@
-const { verifyToken } = require('../utils/jwtUtils');
+const { verifyToken } = require("../utils/jwtUtils.js");
 
 const authMiddleware = async (req, res, next) => {
     try {
-        // الحصول على الـtoken من الـheader
+        // get the token from the header
         const token = req.header('Authorization')?.replace('Bearer ', '');
         
         if (!token) {
@@ -12,7 +12,7 @@ const authMiddleware = async (req, res, next) => {
             });
         }
         
-        // التحقق من الـtoken
+        // verify the token
         const decoded = verifyToken(token);
         
         if (!decoded) {
@@ -21,8 +21,8 @@ const authMiddleware = async (req, res, next) => {
                 message: 'Invalid or expired token'
             });
         }
-        
-        // إضافة بيانات المستخدم إلى الـrequest
+
+        // attach the user id to the request
         req.userId = decoded.id;
         next();
         

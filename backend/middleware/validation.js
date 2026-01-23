@@ -1,4 +1,9 @@
-const { check, validationResult } = require('express-validator');
+// const { check, validationResult } = require('express-validator');
+/**
+ * use the Es import to import the check and validationResult
+ * replace the require
+ */
+const {check, validationResult} = require('express-validator');
 
 const registerValidation = [
     check('username')

@@ -1,28 +1,28 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-// // ❌ الطريقة الخطرة (لا تستخدمها أبداً)
+// // ❌ the dangerous way without mongoose functions
 // const dangerousQuery = (userInput) => {
-//     // هذا عرضة لـ SQL Injection
+//      this sql request is not safe because it is not sanitized
 //     const query = `SELECT * FROM users WHERE username = '${userInput}'`;
 //     return query;
 // };
 
-// ✅ الطريقة الآمنة مع Mongoose
+// ✅ the safe way with Mongoose
 const safeQuery = async (userInput) => {
-    // Mongoose يستخدم Prepared Statements تلقائياً
+    // mongoose prepares the input and sql request in a safe way
     const users = await mongoose.model('User').find({
-        username: userInput  // Mongoose ينظف المدخلات تلقائياً
+        username: userInput  // here mongoose sanitize the input
     });
     return users;
 };
 
-// ✅ حماية إضافية: Input Sanitization
+// ✅ add more protection: Input Sanitization
 
 const sanitizeInput = (input) => {
     return input
-        .replace(/[;\-\-]/g, '') // إزالة الأحرف الخطرة
-        .trim()
-        .substring(0, 100); // تحديد الطول
+        .replace(/[;\-\-]/g, '') // remove ; and -- dangerous characters
+        .trim() // remove spaces
+        .substring(0, 100); // limit the length
 };
 
 module.exports = { safeQuery, sanitizeInput };

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const {userModule, useModule} = require("../module/User");
-const { generateToken } = require("../utils/jwtUtils");
+const User = require("../modules/User");
+const {generateToken} = require("../utils/jwtUtils");
 // const { registerValidation } = require("../middleware/validation");
 // const { validate } = require("../middleware/validation");
 // const { Suspense } = require('react');
@@ -12,53 +12,54 @@ const { generateToken } = require("../utils/jwtUtils");
 // Register Route
 router.route('/register').post(async (req, res) => {
     try {
-    const { username, email, password } = req.body;
-    // TODO: Add validation
-    const existingUser = await userModule.findOne({ $or: [{username}, {email}]});
+        const { username, email, password } = req.body;
+        // TODO: Add validation
+        const existingUser = await User.findOne({ $or: [{username}, {email}]});
 
-    if(existingUser) {
-        return res.status(400).json({ 
-            success: false, 
-            message: 'Username or email already exist Change It!',
-        });
-    }
+        if(existingUser) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Username or email already exist Change It!',
+            });
+        }
+        /**
+        * // const salt = await bcrypt.genSalt(10);
+        * // const hashedPassword = await bcrypt.hash(password, salt);
 
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedPassword = await bcrypt.hash(password, salt);
-    
-    // const newUser = new useModule({username, email, hashedPassword});
-    // await newUser.save();
+        * // const newUser = new useModule({username, email, hashedPassword});
+        * // await newUser.save();
+            */
         // ******** the the difference between them create has the save method include
-    const user = await useModule.create({
-        username,
-        email,
-        password
-    })
+        const user = await User.create({
+            username,
+            email,
+            password
+        });
 
-    const token = newUser.generateToken(user._id);
+        const token = generateToken(user._id);
 
-    res.status(200).json({ 
-        success: true, 
-        message: 'User registered successfully',
-        token,
-        user: { id: user._id, username: username, email:email, createAt: user.createAt }
-    });
+        res.status(200).json({ 
+            success: true, 
+            message: 'User registered successfully',
+            token,
+            user: { id: user._id, username: username, email:email, createAt: user.createAt }
+        });
     } catch(error) {
         console.error("Registration Error: ", error);
         res.status(500).json({
             success: false,
             message: "Server error during registration"
-        })
+        });
     }
 });
 
-// Login Route  
+// Login Router  
 router.post('/login', async (req, res) => {
     try{
     const { email, password } = req.body;
         // TODO: Add authentication
 
-        const user = await userModule.findOne({email: email}).select('+password');
+        const user = await User.findOne({email: email}).select('+password');
 
         if(!user) {
             return res.status(401).json({ 
@@ -94,7 +95,7 @@ router.post('/login', async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Server error during login"
-        })
+        });
 
     }
 });

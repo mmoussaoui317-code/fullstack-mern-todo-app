@@ -11,12 +11,12 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', {
+            const response = await axios.post('http://localhost:3000/api/auth/login', {
                 email,
                 password
             });
-            // console.log(email, password);
-            // console.log('Login successful:', response.data);
+            console.log(email, password);
+            console.log('Login successful:', response.data);
             alert('Login successful! Check console for token');
         } catch (error) {
             console.error('Login error:', error);

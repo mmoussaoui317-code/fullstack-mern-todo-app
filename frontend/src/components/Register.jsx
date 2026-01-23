@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import {sanitizeUserInput} from '../utils/inputSanitizer';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -86,6 +87,7 @@ const Register = () => {
             }
         } catch (error) {
             setApiError('Registration failed. Please try again.');
+            console.error(`Error: ${error}`)
         } finally {
             setLoading(false);
         }
