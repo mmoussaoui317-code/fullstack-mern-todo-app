@@ -1,41 +1,80 @@
-// const mongoose = require('mongoose');
 const express = require('express');
-const xssProtectionMiddleware = require("./middleware/xssProtection")
+const { json } = require('express');
+const xssProtectionMiddleware = require("./middleware/xssProtection");
 const cors = require('cors');
 const helmet = require('helmet');
-require('dotenv').config();
+const connectDB = require("./config/database");
+const morgan =  require('morgan');
+require("dotenv").config();
+
+// const morgan = require('morgan');
+// const mongoose = require('mongoose');
 
 const app = express();
 
 // 🔒 Security Middlewares
-app.use(helmet()); // حماية Headers
-app.use(cors()); // تفعيل CORS
-app.use(express.json()); // تفعيل JSON parsing
+app.use(helmet()); // security Headers
+app.use(cors({
+    origin: ["https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app/login"],
+    credentials: true,
+    optionsSuccessStatus: 200
+})); // enable CORS
+
+app.use(morgan(`combined`)); //enable the register of the request
+app.use(json()); // enable JSON parsing
 
 // added the protection router from the XSS vulnerability
 app.use(xssProtectionMiddleware);
 
 // // 📦 Database Connection
-
-// .then(() => console.log('✅ MongoDB Connected'))
-// .catch(err => console.log('❌ MongoDB Error:', err));
-const connectDB = require("./config/database");
-
 connectDB();
 
-// // 🚀 Basic Route (للاختبار)
-// app.get('/', (req, res) => {
-//     res.json({ message: 'MERN Todo API is running!' });
-// });
+// 🚀 Router Represent The App 
+app.get('/', (req, res) => {
+    res.json({ 
+        success: true,
+        message: 'MERN Todo APP Backend is Live!',
+        version: '1.0.0',
+        timestamp: new Date().toISOString(),
+        endpoints: {
+            docs: '/api-docs',
+            auth: '/api/auth',
+            todos: '/api/todos',
+            health: '/health'
+        }
+    });
+});
+
+// creation of the health router checker
+app.get('/health', (req, res) => {
+    res.json({
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+    });
+});
 
 // 🔐 Authentication Route
 app.use('/api/auth', require("./routes/auth"));
 
-// // app.use('api/test-xss', require('./routes/xss'));
-// app.get("/xss", async (req, res) => {
-//     res.render(require("../test.ejs"));
-//     return res.status(201).json({ message: 'router worked!!' })
-// });
+app.use('/api/todos', require("./routes/todos"));
+
+// handle the 404 error for the routes not found
+app.use('*', (req, res) => {
+    res.status(404).json({
+        success: false,
+        message: `Route ${req.originalUrl} not found`
+    });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error('server error:', err);
+    res.status(500).json({
+        success: false,
+        message: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message
+    });
+});
+
 
 // ⚡ Server Start
 const PORT = process.env.PORT || 5000;

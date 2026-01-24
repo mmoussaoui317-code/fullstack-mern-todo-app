@@ -4,10 +4,11 @@ const connectDB = async () => {
 
     try {
         // String(process.env.MONGODB_URI) || 
-        const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todoapp' , {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+        // const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todoapp' , {
+        //     useNewUrlParser: true,
+        //     useUnifiedTopology: true
+        // });
+        const conn = await mongoose.connect(process.env.MONGODB_URI);
         
         console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
         console.log(`📊 Database: ${conn.connection.name}`);

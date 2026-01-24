@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import axios from 'axios';
 import { sanitizeUserInput } from '../utils/inputSanitizer';
+import config from '../config';
 
 
 const Login = () => {
@@ -11,7 +12,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/login', {
+            const response = await axios.post(`${config.apiUrl}/api/auth/login`, {
                 email,
                 password
             });

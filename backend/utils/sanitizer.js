@@ -53,4 +53,4 @@ function sanitizeObject(obj) {
 }
 
 
-export default  { sanitizeInput, sanitizeObject }
+module.exports =  { sanitizeInput, sanitizeObject }

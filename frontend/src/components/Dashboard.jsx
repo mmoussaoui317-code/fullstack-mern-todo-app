@@ -7,6 +7,7 @@ import {
 // import DeleteIcon from '@mui/';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import config from '../config';
 
 const Dashboard = () => {
     const [todos, setTodos] = useState([]);
@@ -20,7 +21,7 @@ const Dashboard = () => {
 
     const fetchTodos = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/todos');
+            const response = await axios.get(`${config.apiUrl}/api/todos`);
             setTodos(response.data.data || []);
         } catch (error) {
             console.error('Failed to fetch todos:', error);
@@ -32,7 +33,7 @@ const Dashboard = () => {
         
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:5000/api/todos', newTodo);
+            const response = await axios.post(`${config.apiUrl}/api/todos`, newTodo);
             setTodos([...todos, response.data.data]);
             setNewTodo({ title: '', description: '' });
         } catch (error) {

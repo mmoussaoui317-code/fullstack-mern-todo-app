@@ -26,7 +26,6 @@ function xssProtection(req, res, next) {
 module.exports = xssProtection;
 
 
-
 /**
  * -------------------------------------------------------
  * ************* for way i comment this code *************

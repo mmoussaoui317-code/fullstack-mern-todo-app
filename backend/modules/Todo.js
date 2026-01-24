@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const todoSchema = new mongoose.Schema({
-
     title: {
         type: String,
         required: [true, "Todo title is required"],
@@ -18,7 +17,7 @@ const todoSchema = new mongoose.Schema({
         default: false,
     },
     user: {
-        type: mongoose.Schema.type.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
     }
