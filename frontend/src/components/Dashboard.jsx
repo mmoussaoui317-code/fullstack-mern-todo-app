@@ -7,7 +7,7 @@ import {
 // import DeleteIcon from '@mui/';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
-import config from '../config';
+import { config } from '../config.js';
 
 const Dashboard = () => {
     const [todos, setTodos] = useState([]);

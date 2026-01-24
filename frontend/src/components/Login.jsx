@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import axios from 'axios';
 import { sanitizeUserInput } from '../utils/inputSanitizer';
-import config from '../config';
+import { config } from '../config';
 
 
 const Login = () => {
