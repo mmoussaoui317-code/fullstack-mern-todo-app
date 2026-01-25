@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { Link, TextField, Button, Container, Typography, Box } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 import { sanitizeUserInput } from '../utils/inputSanitizer';
 import { config } from '../config';
@@ -72,6 +73,12 @@ const Login = () => {
                 </form>
                 <Typography variant="body2" align="center">
                     Demo: Use any email/password for now
+                </Typography>
+                <Typography variant="body2" align="center" sx={{ mt: 2, color: 'text.secondary' }}>
+                    I don't have an account?{' '}
+                    <Link component={RouterLink} to="/register">
+                        Register here
+                    </Link>
                 </Typography>
             </Box>
         </Container>

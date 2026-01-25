@@ -1,14 +1,10 @@
 const express = require('express');
-const { json } = require('express');
 const xssProtectionMiddleware = require("./middleware/xssProtection");
 const cors = require('cors');
 const helmet = require('helmet');
 const connectDB = require("./config/database");
 const morgan =  require('morgan');
 require("dotenv").config();
-
-// const morgan = require('morgan');
-// const mongoose = require('mongoose');
 
 const app = express();
 
@@ -17,21 +13,21 @@ app.use(helmet()); // security Headers
 app.use(cors({
     origin: ["https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app/login"],
     credentials: true,
-    optionsSuccessStatus: 200
+    optionsSuccessStatus: 201
 })); // enable CORS
 
-app.use(morgan(`combined`)); //enable the register of the request
-app.use(json()); // enable JSON parsing
 
-// added the protection router from the XSS vulnerability
-app.use(xssProtectionMiddleware);
+app.use(morgan(`combined`)); //enable the register of the request
+app.use(express.json()); // enable JSON parsing
 
 // // 📦 Database Connection
 connectDB();
 
+// added the protection router from the XSS vulnerability
+
 // 🚀 Router Represent The App 
 app.get('/', (req, res) => {
-    res.json({ 
+    res.status(200).json({ 
         success: true,
         message: 'MERN Todo APP Backend is Live!',
         version: '1.0.0',
@@ -47,34 +43,34 @@ app.get('/', (req, res) => {
 
 // creation of the health router checker
 app.get('/health', (req, res) => {
-    res.json({
+    res.status(201).json({
         status: 'healthy',
         timestamp: new Date().toISOString(),
     });
 });
 
+app.use(xssProtectionMiddleware);
 // 🔐 Authentication Route
 app.use('/api/auth', require("./routes/auth"));
 
 app.use('/api/todos', require("./routes/todos"));
 
-// handle the 404 error for the routes not found
-app.use('*', (req, res) => {
-    res.status(404).json({
-        success: false,
-        message: `Route ${req.originalUrl} not found`
-    });
-});
+// // handle the 404 error for the routes not found
+// app.use('*', (req, res) => {
+//     res.status(404).json({
+//         success: false,
+//         message: `Route ${req.originalUrl} not found`
+//     });
+// });
 
-// Error handler
-app.use((err, req, res, next) => {
-    console.error('server error:', err);
-    res.status(500).json({
-        success: false,
-        message: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message
-    });
-});
-
+// // Error handler
+// app.use((err, req, res, next) => {
+//     console.error('server error:', err);
+//     res.status(500).json({
+//         success: false,
+//         message: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message
+//     });
+// });
 
 // ⚡ Server Start
 const PORT = process.env.PORT || 5000;

@@ -1,14 +1,19 @@
 const mongoose = require('mongoose');
 
+/**
+ * Returns the MongoDB URI based on the current environment.
+ * In production, it returns the MONGODB_URI environment variable.
+ * In development, it returns 'mongodb://localhost:27017/todoapp'.
+ * @returns {string} The MongoDB URI.
+ */
+function getMongoUri() {
+    return process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost:27017/todoapp';
+}
+
 const connectDB = async () => {
 
     try {
-        // String(process.env.MONGODB_URI) || 
-        // const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/todoapp' , {
-        //     useNewUrlParser: true,
-        //     useUnifiedTopology: true
-        // });
-        const conn = await mongoose.connect(process.env.MONGODB_URI);
+        const conn = await mongoose.connect(getMongoUri());
         
         console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
         console.log(`📊 Database: ${conn.connection.name}`);

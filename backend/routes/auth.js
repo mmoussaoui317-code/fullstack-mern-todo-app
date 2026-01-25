@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require("../modules/User");
 const {generateToken} = require("../utils/jwtUtils");
+const bcrypt = require("bcryptjs/dist/bcrypt");
 // const { registerValidation } = require("../middleware/validation");
 // const { validate } = require("../middleware/validation");
 // const { Suspense } = require('react');
@@ -10,6 +11,7 @@ const {generateToken} = require("../utils/jwtUtils");
 // const validate = require("../middleware/validation");
 
 // Register Route
+
 router.route('/register').post(async (req, res) => {
     try {
         const { username, email, password } = req.body;
@@ -22,6 +24,10 @@ router.route('/register').post(async (req, res) => {
                 message: 'Username or email already exist Change It!',
             });
         }
+
+        const salt = await bcrypt.genSalt(10);
+        const passwordHashed = await bcrypt.hash(password, salt);
+
         /**
         * // const salt = await bcrypt.genSalt(10);
         * // const hashedPassword = await bcrypt.hash(password, salt);
@@ -33,7 +39,7 @@ router.route('/register').post(async (req, res) => {
         const user = await User.create({
             username,
             email,
-            password
+            password: passwordHashed
         });
 
         const token = generateToken(user._id);
@@ -56,9 +62,9 @@ router.route('/register').post(async (req, res) => {
 // Login Router  
 router.post('/login', async (req, res) => {
     try{
-    const { email, password } = req.body;
+        const { email, password } = req.body;
         // TODO: Add authentication
-
+        console.log(email, password);
         const user = await User.findOne({email: email}).select('+password');
 
         if(!user) {
@@ -88,7 +94,7 @@ router.post('/login', async (req, res) => {
                 username: user.username,
                 email: user.email
             }
-        })
+        });
 
     } catch(error) {
         console.log("Login error:", error);

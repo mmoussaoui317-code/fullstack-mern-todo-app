@@ -37,17 +37,42 @@ const userSchema = mongoose.Schema({
     }
 );
 
-userSchema.pre('save', async function(next) {
-    if(!this.isModified('password'))
-        return next();
+/***
+ * this like a trigger in the database RDBMS 
+ * so this function run before save the user
+ * and i'm forget to generate bycrypt.salt after hashing the password
+ */
+// userSchema.pre('save', async function(next) {
+//     if(!this.isModified('password'))
+//         return next();
 
-    try {
-        this.password = await bcrypt.hash(this.password, 10);
-        next();
-    } catch(error) {
-        next(error);
-    }
-});
+//     try {
+//         this.password = await bcrypt.hash(this.password, 10);
+//         next();
+//     } catch(error) {
+//         next();
+//     }
+// });
+
+/***
+ * this occurred an error says the next function is not a function
+ * so i will hashed the password in the register function after the creation
+ * follow this ../routes/auth
+ */
+
+// userSchema.pre('save', async function(next) {
+//     if (!this.isModified('password')) return next();
+    
+//     try {
+//         const salt = await bcrypt.genSalt(10);
+//         this.password = await bcrypt.hash(this.password, salt);
+//     } catch (error) {
+//         console.error("Generate password error: " + error);
+//     }
+
+//     next();
+// });
+
 
 userSchema.methods.comparePassword = async function(candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);

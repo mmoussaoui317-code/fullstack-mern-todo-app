@@ -38,12 +38,11 @@ function sanitizeObject(obj) {
         return obj;
 
     const sanitized = {};
-
-    Object.entries().forEach(({key, value}) => {
-        if(typeof value === 'string') {
-            sanitized[key] = sanitizeInput(value);
-        } else if(typeof value === 'object' && value !== null) {
-            sanitized[key] = sanitizeObject(value);
+    Object.keys(obj).forEach((key) => {
+        if(typeof obj[key] === 'string') {
+            sanitized[key] = sanitizeInput(obj[key]);
+        } else if(typeof obj[key] === 'object' && obj[key] !== null) {
+            sanitized[key] = sanitizeObject(obj[key]);
         } else {
             sanitized[key] = value;
         }

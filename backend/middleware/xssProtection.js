@@ -4,21 +4,27 @@ const { sanitizeObject } = require('../utils/sanitizer');
 
 function xssProtection(req, res, next) {
     try {
-        if(req.body) {
-            req.body.keys().forEach(key => {
+        if(req.body && req.method === 'POST') {
+            Object.keys(req.body).forEach(key => {
                 req.body[key] = xss(req.body[key], {
                 whiteList: {}, // don't allow any tags
                 stripIgnoreTag: true, // ignore all tags
-                stripIgnoreTagBody: ['script', 'object', 'embed', 'link'] // delete all dangerous tags
+                stripIgnoreTagBody: ['script', 'object', 'iframe', 'canvas', 'embed', 'link'] // delete all dangerous tags
                 });
             });
+            req.body = sanitizeObject(req.body);
         }
-        req.body = sanitizeObject(req.body);
     } catch(error) {
-        res.status(500).json({ message: "error" });
+        return res.status(500).json({ message: "error" });
     }
-
-    res.status(200).json({ message: "viewed is right!!!" });
+    /**
+     * this statement is doing an error if use it with the next
+     * so i will comment it
+     * the res sent response
+     * and the next is the next middleware
+     * so give the Errors cannot set headers after they are sent
+     */
+    // res.status(200).json({ message: "viewed is right!!!" });
     next();
 }
 
