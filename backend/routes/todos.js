@@ -1,13 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const { create, find } = require("../modules/Todo");
+// const { create, find } = require("../modules/Todo");
+const Todo = require("../modules/Todo");
 const authMiddleware =require( "../middleware/authMiddleware.js");
 
 router.post("/", authMiddleware, async(req, res) => {
     try {
         const {title, description} = req.body;
 
-        const todo = await create({
+        console.log(req.body, req.userId);
+
+
+        const todo = await Todo.create({
             title,
             description,
             user: req.userId
@@ -27,7 +31,7 @@ router.post("/", authMiddleware, async(req, res) => {
 
 router.get("/", authMiddleware, async(req, res) => {
     try {
-        const todos = await find({
+        const todos = await Todo.find({
             user: req.userId
         });
 

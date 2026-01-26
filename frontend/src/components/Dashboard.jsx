@@ -9,9 +9,11 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { config } from '../config.js';
 
+
 const Dashboard = () => {
     const [todos, setTodos] = useState([]);
     const [newTodo, setNewTodo] = useState({ title: '', description: '' });
+    const [completed, setCompleted] = useState(false);
     const [loading, setLoading] = useState(false);
     const { user, logout } = useAuth();
 
@@ -83,11 +85,12 @@ const Dashboard = () => {
                             key={todo._id}
                             secondaryAction={
                                 <IconButton edge="end">
-                                    <DeleteIcon />
+                                    {/* <DeleteIcon /> */}
                                 </IconButton>
                             }
                         >
-                            <Checkbox checked={todo.completed} />
+                            {/* todo.completed */}
+                            <Checkbox checked={completed} onChange={() => setCompleted( prv => !prv)} />
                             <ListItemText 
                                 primary={todo.title} 
                                 secondary={todo.description} 
