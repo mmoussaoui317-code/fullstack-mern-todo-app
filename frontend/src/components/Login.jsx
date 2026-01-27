@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, TextField, Button, Container, Typography, Box } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { sanitizeUserInput } from '../utils/inputSanitizer';
 import { config } from '../config';
@@ -9,6 +9,7 @@ import { config } from '../config';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,6 +21,7 @@ const Login = () => {
             console.log(email, password);
             console.log('Login successful:', response.data);
             alert('Login successful! Check console for token');
+            navigate('/dashboard');
         } catch (error) {
             console.error('Login error:', error);
             alert('Login failed!');
