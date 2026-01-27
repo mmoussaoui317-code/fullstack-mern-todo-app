@@ -11,7 +11,7 @@ const app = express();
 // 🔒 Security Middlewares
 app.use(helmet()); // security Headers
 app.use(cors({
-    origin: "https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app",
+    origin: "https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app/login",
     credentials: true,
     optionsSuccessStatus: 200
 })); // enable CORS
