@@ -1,11 +1,11 @@
 {
   "headers": [
     {
-      "source": "https://fullstack-mern-todo-ef55vnbw5-moussaouims-projects.vercel.app",
+      "source": "/api/auth/register",
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "/api/auth/register"
+          "value": "https://fullstack-mern-todo-ef55vnbw5-moussaouims-projects.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Methods",
