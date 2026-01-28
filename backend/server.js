@@ -10,6 +10,7 @@ const app = express();
 
 const corsOptions = {
     origin: [
+            "https://fullstack-mern-todo-app.onrender.com",
             "https://mmoussaoui317-code-fullstack-mern-t.vercel.app",
             "https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app",
             "http://localhost:{}".replace('{}', process.env.PORT)
