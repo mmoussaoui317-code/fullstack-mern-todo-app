@@ -8,13 +8,21 @@ require("dotenv").config();
 
 const app = express();
 
+const corsOptions = {
+    origin: [
+            "https://mmoussaoui317-code-fullstack-mern-t.vercel.app",
+            "https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app",
+            "http://localhost:{}".replace('{}', process.env.PORT)
+        ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}
+
 // 🔒 Security Middlewares
 app.use(helmet()); // security Headers
-app.use(cors({
-    origin: "https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app/login",
-    credentials: true,
-    optionsSuccessStatus: 200
-})); // enable CORS
+app.use(cors(corsOptions)); // enable CORS
+app.use("*", cors(corsOptions));
 
 
 app.use(morgan(`combined`)); //enable the register of the request
@@ -23,7 +31,6 @@ app.use(express.json()); // enable JSON parsing
 // // 📦 Database Connection
 connectDB();
 
-// added the protection router from the XSS vulnerability
 
 // 🚀 Router Represent The App 
 app.get('/', (req, res) => {
@@ -49,7 +56,9 @@ app.get('/health', (req, res) => {
     });
 });
 
+// added the protection router from the XSS vulnerability
 app.use(xssProtectionMiddleware);
+
 // 🔐 Authentication Route
 app.use('/api/auth', require("./routes/auth"));
 

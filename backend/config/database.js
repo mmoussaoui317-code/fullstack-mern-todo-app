@@ -7,14 +7,16 @@ const mongoose = require('mongoose');
  * @returns {string} The MongoDB URI.
  */
 function getMongoUri() {
-    // return process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost:27017/todoapp';
-    return process.env.MONGODB_URI
+    return process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost:27017/todoapp';
+    // return process.env.MONGODB_URI
 }
 
 const connectDB = async () => {
 
     try {
-        const conn = await mongoose.connect(getMongoUri());
+        const conn = await mongoose.connect(getMongoUri(), {
+            serverSelectionTimeoutMS: 5000,
+        });
         
         console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
         console.log(`📊 Database: ${conn.connection.name}`);
