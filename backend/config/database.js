@@ -15,6 +15,7 @@ const connectDB = async () => {
 
     try {
         const conn = await mongoose.connect(getMongoUri(), {
+            family: 4, // use IPv4, without trying IPv6, default is IPv6
             serverSelectionTimeoutMS: 5000,
         });
         

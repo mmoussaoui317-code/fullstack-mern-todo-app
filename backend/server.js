@@ -7,18 +7,49 @@ const morgan =  require('morgan');
 require("dotenv").config();
 
 const app = express();
+/**
+ *  This Has More Errors 
+ *  First I'm added the path of the backend and the path of the frontend
+ *  and the  variable process.env.VITE_PORT is not the correct port number of the frontend
+ *  credentials: true -> allow to send cookies but me i'm not use them in this project
+ *  /**
+ *   * also the origin: * and this credentials: true doesn't work together in the same time
+ *  **\/
+ */
+// const corsOptions = {
+//     // origin: [
+//     //         "https://fullstack-mern-todo-app.onrender.com",
+//     //         "https://mmoussaoui317-code-fullstack-mern-t.vercel.app",
+//     //         "https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app",
+//     //         `http://localhost:${process.env.VITE_PORT}`,
+//     //         `http://localhost:5173/`
+//     //     ],
+//     credentials: true,
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization']
+// }
+
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://mmoussaoui317-code-fullstack-mern-t.vercel.app",
+    "https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app",
+];
 
 const corsOptions = {
-    origin: [
-            "https://fullstack-mern-todo-app.onrender.com",
-            "https://mmoussaoui317-code-fullstack-mern-t.vercel.app",
-            "https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app",
-            "http://localhost:{}".replace('{}', process.env.PORT)
-        ],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true); // Postman / curl
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+};
+
+app.use(cors(corsOptions));
+
+
 
 // 🔒 Security Middlewares
 app.use(helmet()); // security Headers

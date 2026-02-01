@@ -53,6 +53,7 @@ const Login = () => {
                         onChange={handleInputChange}
                         margin="normal"
                         required
+                        autoComplete="email"
                     />
                     <TextField
                         fullWidth
@@ -62,6 +63,7 @@ const Login = () => {
                         onChange={handleInputChange}
                         margin="normal"
                         required
+                        autoComplete="current-password"
                     />
                     <Button
                         fullWidth

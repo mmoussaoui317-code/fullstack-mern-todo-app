@@ -123,6 +123,7 @@ const Register = () => {
                         helperText={errors.username}
                         margin="normal"
                         disabled={loading}
+                        autoComplete="username"
                     />
                     
                     <TextField
@@ -136,6 +137,7 @@ const Register = () => {
                         helperText={errors.email}
                         margin="normal"
                         disabled={loading}
+                        autoComplete="email"
                     />
                     
                     <TextField
@@ -149,6 +151,7 @@ const Register = () => {
                         helperText={errors.password}
                         margin="normal"
                         disabled={loading}
+                        autoComplete="new-password"
                     />
                     
                     <TextField
@@ -162,6 +165,7 @@ const Register = () => {
                         helperText={errors.confirmPassword}
                         margin="normal"
                         disabled={loading}
+                        autoComplete="new-password"
                     />
                     
                     <Button
