@@ -31,6 +31,7 @@ const app = express();
 
 const allowedOrigins = [
     "http://localhost:5173",
+    "https://fullstack-mern-todo-app.vercel.app",
     "https://mmoussaoui317-code-fullstack-mern-t.vercel.app",
     "https://fullstack-mern-todo-b8x7vpgua-moussaouims-projects.vercel.app",
 ];
