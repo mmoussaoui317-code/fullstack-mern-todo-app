@@ -4,8 +4,11 @@ import {
     Typography, List, ListItem, ListItemText,
     Checkbox, IconButton, CircularProgress
 } from '@mui/material';
+
 // import DeleteIcon from '@mui/';
 import { useAuth } from '../context/AuthContext';
+import { TodoList } from './TodoList.jsx';
+
 import axios from 'axios';
 import { config } from '../config.js';
 
@@ -13,7 +16,7 @@ import { config } from '../config.js';
 const Dashboard = () => {
     const [todos, setTodos] = useState([]);
     const [newTodo, setNewTodo] = useState({ title: '', description: '' });
-    const [completed, setCompleted] = useState(false);
+    // const [completed, setCompleted] = useState(false);
     const [loading, setLoading] = useState(false);
     const { user, logout } = useAuth();
 
@@ -79,25 +82,27 @@ const Dashboard = () => {
                 </Box>
                 
                 {/* قائمة Todos */}
-                <List>
-                    {todos.map((todo) => (
-                        <ListItem
-                            key={todo._id}
-                            secondaryAction={
-                                <IconButton edge="end">
+                {/* <List> */}
+                    {/* {todos.map((todo) => ( */}
+                        {/* // <ListItem */}
+                            {/* // key={todo._id} */}
+                            {/* // secondaryAction={ */}
+                                {/* // <IconButton edge="end"> */}
                                     {/* <DeleteIcon /> */}
-                                </IconButton>
-                            }
-                        >
+                                {/* </IconButton> */}
+                            {/* // } */}
+                        {/* // > */}
                             {/* todo.completed */}
-                            <Checkbox checked={completed} onChange={() => setCompleted( prv => !prv)} />
-                            <ListItemText 
-                                primary={todo.title} 
-                                secondary={todo.description} 
-                            />
-                        </ListItem>
-                    ))}
-                </List>
+                            {/* <Checkbox checked={completed} onChange={() => setCompleted( prv => !prv)} /> */}
+                            {/* <ListItemText  */}
+                                {/* // primary={todo.title}  */}
+                                {/* // secondary={todo.description}  */}
+                            {/* // /> */}
+                        {/* </ListItem> */}
+                    {/* // ))} */}
+                {/* </List> */}
+
+                <TodoList todos={todos} />
                 
                 {todos.length === 0 && (
                     <Typography align="center" color="text.secondary">

@@ -6,7 +6,7 @@ import { sanitizeUserInput } from '../utils/inputSanitizer';
 import { config } from '../config';
 
 
-const Login = () => {
+const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -39,7 +39,7 @@ const Login = () => {
     };
 
     return (
-        <Container maxWidth="xs">
+        <Container maxWidth="xs" style={{backgroundColor: props.isDark === 'darkMode' ? 'black' : 'white', color: props.isDark === 'darkMode' ? 'white' : 'black' }}>
             <Box sx={{ mt: 8, p: 3, boxShadow: 3, borderRadius: 2 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Login to Todo App

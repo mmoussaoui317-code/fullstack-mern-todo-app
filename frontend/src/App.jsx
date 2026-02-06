@@ -4,6 +4,9 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+// import { useTheme } from '@emotion/react';
+import { useTheme } from './context/ThemeContext.jsx';
+import { Button } from '@mui/material';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -20,10 +23,10 @@ const ProtectedRoute = ({ children }) => {
     return children;
 };
 
-const AppContent = () => {
+const AppContent = (props) => {
     return (
         <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login isDark={props.isDark} />} />
             <Route path="/register" element={<Register />} />
             <Route 
                 path="/dashboard" 
@@ -39,10 +42,22 @@ const AppContent = () => {
 };
 
 const App = () => {
+    const { dispatch, state } = useTheme();
+    console.log(dispatch, state);
+
     return (
         <Router>
+            <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={() => { dispatch({type: "switchDark", payload: !state.isDark}) }}
+            >
+                Switch Mode
+            </Button>
             <AuthProvider>
-                <AppContent />
+                <AppContent isDark={`${state.isDark ? 'darkMode' : 'lightMode'}`} />
             </AuthProvider>
         </Router>
     );
