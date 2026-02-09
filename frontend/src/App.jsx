@@ -43,10 +43,10 @@ const AppContent = (props) => {
 
 const App = () => {
     const { dispatch, state } = useTheme();
-    console.log(dispatch, state);
+    // console.log(dispatch, state);
 
     return (
-        <Router>
+        <Router className={`${state.isDark ? 'darkMode' : 'lightMode'}`}>
             <Button
                 type="button"
                 variant="contained"

@@ -4,13 +4,12 @@ import {
     Typography, List, ListItem, ListItemText,
     Checkbox, IconButton, CircularProgress
 } from '@mui/material';
-
 // import DeleteIcon from '@mui/';
 import { useAuth } from '../context/AuthContext';
 import { TodoList } from './TodoList.jsx';
-
 import axios from 'axios';
 import { config } from '../config.js';
+import DashboardStats from './DashboardStats.jsx';
 
 
 const Dashboard = () => {
@@ -102,7 +101,7 @@ const Dashboard = () => {
                     {/* // ))} */}
                 {/* </List> */}
 
-                <TodoList todos={todos} />
+                <TodoList todos={todos} onReorder={() => { console.log("Must Search To this Notion") }} />
                 
                 {todos.length === 0 && (
                     <Typography align="center" color="text.secondary">
@@ -110,6 +109,8 @@ const Dashboard = () => {
                     </Typography>
                 )}
                 
+                <DashboardStats todos={ todos || [] } />
+
                 <Button 
                     variant="outlined" 
                     onClick={logout}
