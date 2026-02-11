@@ -101,7 +101,7 @@ const Dashboard = () => {
                     {/* // ))} */}
                 {/* </List> */}
 
-                <TodoList todos={todos} onReorder={() => { console.log("Must Search To this Notion") }} />
+                <TodoList todos={todos} onReorder={setTodos} />
                 
                 {todos.length === 0 && (
                     <Typography align="center" color="text.secondary">
