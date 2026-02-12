@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, TextField, Button, Container, Typography, Box } from '@mui/material';
+import { Link, TextField, Button, Container, Typography, Box, CircularProgress } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { sanitizeUserInput } from '../utils/inputSanitizer';
@@ -9,19 +9,23 @@ import { config } from '../config';
 const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true);
             const response = await axios.post(`${config.apiUrl}/api/auth/login`, {
                 email,
                 password
             });
-            console.log(email, password);
-            console.log('Login successful:', response.data);
-            alert('Login successful! Check console for token');
-            navigate('/dashboard');
+            // console.log(email, password);
+            // console.log('Login successful:', response.data);
+            // alert('Login successful! Check console for token');
+            // navigate('/dashboard');
+            response && navigate("/dashboard");
+            setLoading(false);
         } catch (error) {
             console.error('Login error:', error);
             alert('Login failed!');
@@ -72,7 +76,7 @@ const Login = (props) => {
                         color="primary"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Login
+                        {loading ? <CircularProgress size={24} /> : 'Login'}
                     </Button>
                 </form>
                 <Typography variant="body2" align="center">
