@@ -10,6 +10,7 @@ import { TodoList } from './TodoList.jsx';
 import axios from 'axios';
 import { config } from '../config.js';
 import DashboardStats from './DashboardStats.jsx';
+import { SimpleDragDrop } from './SimpleDragDrop.jsx';
 
 
 const Dashboard = () => {
@@ -46,6 +47,13 @@ const Dashboard = () => {
             setLoading(false);
         }
     };
+
+    const [preList, setPreList] = useState([
+        { id: 1, title: 'شراء الحليب' },
+        { id: 2, title: 'حل واجبات البرمجة' },
+        { id: 3, title: 'الذهاب للصالة الرياضية' }
+    ]);
+
 
     return (
         <Container maxWidth="md">
@@ -119,6 +127,7 @@ const Dashboard = () => {
                     Logout
                 </Button>
             </Box>
+            <SimpleDragDrop items={preList} onReorder={setPreList} />
         </Container>
     );
 };
