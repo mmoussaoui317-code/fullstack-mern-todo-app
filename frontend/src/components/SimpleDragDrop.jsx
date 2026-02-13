@@ -19,18 +19,19 @@ export const SimpleDragDrop = ({items, onReorder}) => {
 
     const handleDrop = (e, index) => {
         e.preventDefault();
+        // console.log(index);
         if(dragItem.current !== null && dragItem.current !== index) {
-            const newItems = [...items];
-            const draggedItem = newItems[dragItem.current];
+            // const newItems = [...items];
+            // const draggedItem = newItems[dragItem.current];
+            const [draggedItem, newItems] = [items[dragItem.current], [...items]];
+            console.log(dragItem, newItems);
             newItems.splice(dragItem.current, 1);
             newItems.splice(index, 0, draggedItem);
             onReorder(newItems);
-
         }
-
-            setDraggingIndex(null);
-            setDragOverIndex(null);
-            dragItem.current = null;
+        setDraggingIndex(null);
+        setDragOverIndex(null);
+        dragItem.current = null;
     }
 
     const handleDragEnd = () => {
