@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, /*useEffect*/ } from 'react';
 import { 
     Container, TextField, Button, Box, 
     Typography, List, ListItem, ListItemText,
     Checkbox, IconButton, CircularProgress
 } from '@mui/material';
 // import DeleteIcon from '@mui/';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext.jsx';
 import { TodoList } from './TodoList.jsx';
 import axios from 'axios';
 import { config } from '../config.js';
@@ -20,18 +20,18 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(false);
     const { user, logout } = useAuth();
 
-    useEffect(() => {
-        fetchTodos();
-    }, []);
+    // useEffect(() => {
+    //     fetchTodos();
+    // }, []);
 
-    const fetchTodos = async () => {
-        try {
-            const response = await axios.get(`${config.apiUrl}/api/todos`);
-            setTodos(response.data.data || []);
-        } catch (error) {
-            console.error('Failed to fetch todos:', error);
-        }
-    };
+    // const fetchTodos = async () => {
+    //     try {
+    //         const response = await axios.get(`${config.apiUrl}/api/todos`);
+    //         setTodos(response.data.data || []);
+    //     } catch (error) {
+    //         console.error('Failed to fetch todos:', error);
+    //     }
+    // };
 
     const handleAddTodo = async () => {
         if (!newTodo.title.trim()) return;

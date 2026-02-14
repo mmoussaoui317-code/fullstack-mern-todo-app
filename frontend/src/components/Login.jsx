@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, TextField, Button, Container, Typography, Box, CircularProgress } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import { sanitizeUserInput } from '../utils/inputSanitizer';
-import { config } from '../config';
+// import { config } from '../config';
+import { useAuth } from '../context/AuthContext';
 
 
 const Login = (props) => {
@@ -12,24 +13,27 @@ const Login = (props) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    const { login } = useAuth();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
-            setLoading(true);
-            const response = await axios.post(`${config.apiUrl}/api/auth/login`, {
-                email,
-                password
-            });
+            // const response = await axios.post(`${config.apiUrl}/api/auth/login`, {
+            //     email,
+            //     password
+            // });
             // console.log(email, password);
             // console.log('Login successful:', response.data);
             // alert('Login successful! Check console for token');
             // navigate('/dashboard');
-            response && navigate("/dashboard");
-            setLoading(false);
+            const response = await login(email, password);
+            response.success && navigate('/dashboard');
         } catch (error) {
             console.error('Login error:', error);
             alert('Login failed!');
         }
+        setLoading(false);
     };
 
     const handleInputChange = (e) => {
@@ -38,7 +42,7 @@ const Login = (props) => {
         if(e.target.type.toLowerCase() == "email") {
             setEmail(cleanInput);
         } else if(e.target.type.toLowerCase() == "password") {
-            setPassword(cleanInput)
+            setPassword(cleanInput);
         }
     };
 

@@ -17,6 +17,8 @@ const ThemeReducer = (state, action) => {
 
 const ThemeContext = createContext();
 
+// Must Be in a separate file
+// eslint-disable-next-line
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {

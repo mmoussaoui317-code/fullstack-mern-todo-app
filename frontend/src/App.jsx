@@ -1,12 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { useAuth } from './context/AuthContext.jsx';
+import { AuthProvider } from './context/AuthProvider.jsx';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+// import DashboardStats from './components/DashboardStats.jsx';
 // import { useTheme } from '@emotion/react';
 import { useTheme } from './context/ThemeContext.jsx';
+// import { useTodos, TodosProvider } from './context/TodosProvider.jsx';
 import { Button } from '@mui/material';
+// import { To }
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -24,6 +28,11 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AppContent = (props) => {
+
+    // const { dispatch, state } = useTodos();
+
+    // dispatch({type: "AddTodo", payload: { id: 5, title: 'Todo 1', completed: false, priority: 'urgent' }});
+
     return (
         <Routes>
             <Route path="/login" element={<Login isDark={props.isDark} />} />
@@ -37,6 +46,7 @@ const AppContent = (props) => {
                 } 
             />
             <Route path="/" element={<Navigate to="/dashboard" />} />
+            {/* <Route path="/dashboardStarts" element={<DashboardStats todos={state.todos}/>} /> */}
         </Routes>
     );
 };

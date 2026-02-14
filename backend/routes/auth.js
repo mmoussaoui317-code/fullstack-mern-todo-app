@@ -64,7 +64,7 @@ router.post('/login', async (req, res) => {
     try{
         const { email, password } = req.body;
         // TODO: Add authentication
-        console.log(email, password);
+        // console.log(email, password);
         const user = await User.findOne({email: email}).select('+password');
 
         if(!user) {
@@ -105,5 +105,24 @@ router.post('/login', async (req, res) => {
 
     }
 });
+
+// router.get('/me', async (req, res) => {
+//     try {
+//         const { username, email } = req.body;
+
+//         const meUser = await User.findOne({ $or: [{username}, {email}]});
+
+//         return res.status(200).json({
+//             success: true,
+//             message: 'the current user connected is me !!',
+//             user: { username: meUser.username, email: meUser.email }
+//         });
+//     } catch(error) {
+//         return res.status(500).json({
+//             success: false,
+//             error: "Server Error During Fetch Data",
+//         });
+//     }
+// });
 
 module.exports = router;
