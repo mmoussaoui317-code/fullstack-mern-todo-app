@@ -2,6 +2,8 @@
     "cSpell.words": [
         "mern",
         "MERN",
+        "njsproj",
+        "ntvs",
         "todoapp",
         "أبداً",
         "إزالة",
@@ -30,5 +32,8 @@
         "مشروعك",
         "يستخدم",
         "ينظف"
+    ],
+    "cSpell.ignoreWords": [
+        "pangea"
     ]
 }

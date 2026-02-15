@@ -28,6 +28,6 @@ class SecurityAudit:
         
         return self.results
 
-# الاستخدام
+# Utilize the SecurityAudit class
 audit = SecurityAudit("http://localhost:5000")
 print("\n".join(audit.check_xss_vulnerability()))
