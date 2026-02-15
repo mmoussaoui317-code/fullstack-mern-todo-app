@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require("../modules/User");
-const {generateToken} = require("../utils/jwtUtils");
+const {generateToken, verifyToken} = require("../utils/jwtUtils");
 const bcrypt = require("bcryptjs/dist/bcrypt");
 // const { registerValidation } = require("../middleware/validation");
 // const { validate } = require("../middleware/validation");
@@ -106,23 +106,36 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// router.get('/me', async (req, res) => {
-//     try {
-//         const { username, email } = req.body;
+router.get('/me', async (req, res) => {
+    try {
+        const { token } = req.query;
 
-//         const meUser = await User.findOne({ $or: [{username}, {email}]});
+        const { id } = verifyToken(token);
 
-//         return res.status(200).json({
-//             success: true,
-//             message: 'the current user connected is me !!',
-//             user: { username: meUser.username, email: meUser.email }
-//         });
-//     } catch(error) {
-//         return res.status(500).json({
-//             success: false,
-//             error: "Server Error During Fetch Data",
-//         });
-//     }
-// });
+        // console.log(response);
+
+        const meUser = await User.findOne({ _id: id }).select('-isAdmin -password -createdAt -updatedAt -_id');
+
+        if(!meUser) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        // console.log(meUser);
+
+        return res.status(200).json({
+            success: true,
+            message: 'the current user connected is me !!',
+            user: { username: meUser.username, email: meUser.email }
+        });
+    } catch(error) {
+        return res.status(500).json({
+            success: false,
+            error: "Server Error During Fetch Data",
+        });
+    }
+});
 
 module.exports = router;

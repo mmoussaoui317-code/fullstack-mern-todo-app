@@ -19,11 +19,10 @@ class SQLInjectionTester:
                 response = requests.post(self.url, data=data)
                 
                 if any(error in response.text.lower() for error in 
-                       ['sql', 'syntax', 'mysql', 'database']):
+                    ['sql', 'syntax', 'mysql', 'database']):
                     print(f"⚠️  Potential SQL Injection with payload: {payload}")
                 else:
                     print(f"✅ Safe against: {payload}")
-                    
             except Exception as e:
                 print(f"❌ Error: {e}")
 

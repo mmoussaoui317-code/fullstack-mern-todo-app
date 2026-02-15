@@ -4,17 +4,17 @@
     <title>XSS Test Page</title>
 </head>
 <body>
-    <h1>اختبار حماية XSS</h1>
+    <h1>Test The Security XSS</h1>
     
     <form id="testForm">
         <textarea id="payload" rows="4" cols="50">
-            أدخل payloads XSS هنا لاختبارها:
+            Enter payloads XSS here to test:
             &lt;script&gt;alert('XSS')&lt;/script&gt;
             &lt;img src="x" onerror="alert(1)"&gt;
             &lt;a href="javascript:alert('XSS')"&gt;Click&lt;/a&gt;
         </textarea>
         <br>
-        <button type="button" onclick="testSanitizer()">اختبار</button>
+        <button type="button" onclick="testSanitizer()">Test</button>
     </form>
     
     <div id="result"></div>
@@ -32,13 +32,13 @@
             
             const result = await response.json();
             document.getElementById('result').innerHTML = `
-                <h3>النتيجة:</h3>
-                <p><strong>المدخل:</strong> ${escapeHtml(payload)}</p>
-                <p><strong>الناتج:</strong> ${escapeHtml(result.cleaned)}</p>
-                <p><strong>آمن:</strong> ${result.isSafe ? '✅' : '❌'}</p>
+                <h3>result:</h3>
+                <p><strong>Entry:</strong> ${escapeHtml(payload)}</p>
+                <p><strong>Output:</strong> ${escapeHtml(result.cleaned)}</p>
+                <p><strong>Security:</strong> ${result.isSafe ? '✅' : '❌'}</p>
             `;
         } catch (error) {
-            document.getElementById('result').innerHTML = `خطأ: ${error.message}`;
+            document.getElementById('result').innerHTML = `Error: ${error.message}`;
         }
     }
     
@@ -55,4 +55,4 @@
 </html>
 
 
-<!-- أنشئ ملف test.html بسيط لاختبار الحماية -->
+<!-- Create a simple test.html file to test the XSS -->

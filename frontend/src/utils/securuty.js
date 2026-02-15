@@ -2,8 +2,8 @@ import DOMPurify from 'dompurify';
 
 export const sanitizeHTML = (html) => {
     return DOMPurify.sanitize(html, {
-        ALLOWED_TAGS: [], // لا تسمح بأي tags
-        ALLOWED_ATTR: []  // لا تسمح بأي attributes
+        ALLOWED_TAGS: [], // don't allow any tags
+        ALLOWED_ATTR: []  // don't allow any attributes
     });
 };
 

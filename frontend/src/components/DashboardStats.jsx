@@ -1,23 +1,23 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 const DashboardStats = ({ todos }) => {
-    // بيانات للإحصائيات
+    // Calculate completion data
     const completionData = [
-        { name: 'مكتمل', value: todos.filter(t => t.completed).length, color: '#10b981' },
-        { name: 'غير مكتمل', value: todos.filter(t => !t.completed).length, color: '#ef4444' }
+        { name: 'Done', value: todos.filter(t => t.completed).length, color: '#10b981' },
+        { name: 'Not Done', value: todos.filter(t => !t.completed).length, color: '#ef4444' }
     ];
 
     const priorityData = [
-        { priority: 'عاجل', count: todos.filter(t => t.priority === 'urgent').length },
-        { priority: 'عالي', count: todos.filter(t => t.priority === 'high').length },
-        { priority: 'متوسط', count: todos.filter(t => t.priority === 'medium').length },
-        { priority: 'منخفض', count: todos.filter(t => t.priority === 'low').length }
+        { priority: 'urgent', count: todos.filter(t => t.priority === 'urgent').length },
+        { priority: 'high', count: todos.filter(t => t.priority === 'high').length },
+        { priority: 'medium', count: todos.filter(t => t.priority === 'medium').length },
+        { priority: 'low', count: todos.filter(t => t.priority === 'low').length }
     ];
 
     return (
         <div className="stats-grid">
             <div className="stat-card">
-                <h3>حالة المهام</h3>
+                <h3>Task Status</h3>
                 <ResponsiveContainer width="100%" height={200}>
                     <PieChart>
                         <Pie
@@ -40,7 +40,7 @@ const DashboardStats = ({ todos }) => {
             </div>
 
             <div className="stat-card">
-                <h3>الأولويات</h3>
+                <h3>Firsts</h3>
                 <ResponsiveContainer width="100%" height={200}>
                     <BarChart data={priorityData}>
                         <XAxis dataKey="priority" />

@@ -54,9 +54,9 @@ module.exports = xssProtection;
 // // const sanitizeInput = (input) => {
 // //     if (typeof input === 'string') {
 // //         return xss(input, {
-// //             whiteList: {}, // لا تسمح بأي tags
-// //             stripIgnoreTag: true, // إزالة جميع tags
-// //             stripIgnoreTagBody: ['script'] // إزالة محتوى script
+// //             whiteList: {}, // don't allow any tags
+// //             stripIgnoreTag: true, // ignore all tags
+// //             stripIgnoreTagBody: ['script'] // delete all script
 // //         });
 // //     }
 // //     return input;

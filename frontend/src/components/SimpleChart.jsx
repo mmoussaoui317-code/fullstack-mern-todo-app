@@ -1,27 +1,26 @@
 
-// frontend/src/components/SimpleChart.js
-// نبني chart بسيط بدون مكتبات
+// build chart simple without library
 const SimpleChart = ({ data }) => {
-    // بيانات المثال
+    // mock data
     const chartData = data || [
-        { label: 'مكتمل', value: 40, color: '#10b981' },
-        { label: 'قيد التنفيذ', value: 30, color: '#f59e0b' },
-        { label: 'متأخر', value: 20, color: '#ef4444' },
-        { label: 'جديد', value: 10, color: '#3b82f6' }
+        { label: 'Done', value: 40, color: '#10b981' },
+        { label: 'In Progress', value: 30, color: '#f59e0b' },
+        { label: 'Delayed', value: 20, color: '#ef4444' },
+        { label: 'New', value: 10, color: '#3b82f6' }
     ];
 
-    // حساب الإجمالي
+    // Calculate the total value
     const total = chartData.reduce((sum, item) => sum + item.value, 0);
 
     return (
         <div style={{ padding: '20px', backgroundColor: 'white', borderRadius: '8px' }}>
             <h3 style={{ marginBottom: '20px', textAlign: 'center' }}>
-                📊 إحصائيات المهام (مبنية يدوياً)
+                📊  (Builded Dynamic)
             </h3>
             
-            {/* رسم بياني عمودي بسيط */}
+            {/* Design a simple column chart */}
             <div style={{ marginBottom: '30px' }}>
-                <h4>مخطط الأعمدة:</h4>
+                <h4>Column chart:</h4>
                 <div style={{ 
                     display: 'flex', 
                     alignItems: 'flex-end', 
@@ -30,7 +29,7 @@ const SimpleChart = ({ data }) => {
                     padding: '20px 0'
                 }}>
                     {chartData.map((item, index) => {
-                        const height = (item.value / total) * 150; // حساب الارتفاع
+                        const height = (item.value / total) * 150; // calculate the height
                         return (
                             <div key={index} style={{ textAlign: 'center' }}>
                                 <div
@@ -52,11 +51,11 @@ const SimpleChart = ({ data }) => {
                 </div>
             </div>
 
-            {/* رسم بياني دائري بسيط */}
+            {/* Design a simple rounded chart */}
             <div>
-                <h4>مخطط دائري:</h4>
+                <h4>Rounded chart:</h4>
                 <div style={{ position: 'relative', width: '200px', height: '200px', margin: '20px auto' }}>
-                    {/* نرسم الدائرة باستخدام conic-gradient */}
+                    {/* design a circle by conic-gradient */}
                     <div
                         style={{
                             width: '200px',
@@ -74,7 +73,7 @@ const SimpleChart = ({ data }) => {
                         }}
                     />
                     
-                    {/* نص في المنتصف */}
+                    {/* text in the center */}
                     <div style={{
                         position: 'absolute',
                         top: '50%',
@@ -90,12 +89,12 @@ const SimpleChart = ({ data }) => {
                         justifyContent: 'center',
                         flexDirection: 'column'
                     }}>
-                        <strong>المجموع</strong>
+                        <strong>Total</strong>
                         <span>{total}</span>
                     </div>
                 </div>
 
-                {/* وسيلة إيضاح */}
+                {/* display the data */}
                 <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px', marginTop: '20px' }}>
                     {chartData.map((item, index) => (
                         <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>

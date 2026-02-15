@@ -49,8 +49,8 @@ const Dashboard = () => {
     };
 
     const [preList, setPreList] = useState([
-        { id: 1, title: 'شراء الحليب' },
-        { id: 2, title: 'حل واجبات البرمجة' },
+        { id: 1, title: 'حل واجبات البرمجة' },
+        { id: 2, title: 'استكشاف المدينة' },
         { id: 3, title: 'الذهاب للصالة الرياضية' }
     ]);
 
@@ -62,7 +62,7 @@ const Dashboard = () => {
                     Welcome, {user?.username || 'User'}!
                 </Typography>
                 
-                {/* إضافة Todo جديد */}
+                {/* Add New Todo  */}
                 <Box sx={{ mb: 4, p: 2, bgcolor: 'grey.100', borderRadius: 1 }}>
                     <TextField
                         fullWidth
@@ -88,7 +88,7 @@ const Dashboard = () => {
                     </Button>
                 </Box>
                 
-                {/* قائمة Todos */}
+                {/* List of Todos */}
                 {/* <List> */}
                     {/* {todos.map((todo) => ( */}
                         {/* // <ListItem */}

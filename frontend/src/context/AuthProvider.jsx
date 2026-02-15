@@ -8,32 +8,32 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [loading, setLoading] = useState(true);
 
-    // إعداد axios defaults
+    // prepare axios defaults
     useEffect(() => {
         if (token) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             // get the data 
-            // fetchUserData();
+            fetchUserData();
         } else {
             delete axios.defaults.headers.common['Authorization'];
-            // eslint-disable-next-line
             setLoading(false);
         }
+    // eslint-disable-next-line
     }, [token]);
 
-    // const fetchUserData = async () => {
-    //     try {
-    //         // endpoint GET the current user data connect
-    //         const response = await axios.get(`${config.apiUrl}/api/auth/me`);
-    //         console.log(response.data);
-    //         setUser(response.data.user);
-    //     } catch (error) {
-    //         console.error('Failed to fetch user data:', error);
-    //         logout();
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
+    const fetchUserData = async () => {
+        try {
+            // endpoint GET the current user data connect
+            const response = await axios.get(`${config.apiUrl}/api/auth/me?token=${token}`);
+            // console.log(response.data);
+            setUser(response.data.user);
+        } catch (error) {
+            console.error('Failed to fetch user data:', error);
+            logout();
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const login = async (email, password) => {
         try {

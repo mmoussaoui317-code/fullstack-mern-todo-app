@@ -25,7 +25,7 @@ export const TodoList = ({ todos, onReorder }) => {
                                         {...provided.dragHandleProps}
                                         className="todo-item"
                                     >
-                                        {/* محتوى الـTodo */}
+                                        {/* content of Todo */}
                                         <span>{todo.title}</span>
                                     </div>
                                 )}
