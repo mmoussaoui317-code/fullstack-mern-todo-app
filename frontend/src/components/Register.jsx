@@ -5,9 +5,12 @@ import {
 } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext.jsx';
+
 import { sanitizeUserInput } from '../utils/inputSanitizer';
 
 const Register = () => {
+    const { state } = useTheme();
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -94,15 +97,15 @@ const Register = () => {
     };
 
     return (
-        <Container maxWidth="xs">
+        <Container maxWidth="xs" sx={{color: state.isDark ? state.lightColor : state.darkColor, bgcolor: state.isDark ? state.secondaryColor : state.lightColor}}>
             <Box sx={{ 
                 mt: 8, 
                 p: 3, 
                 boxShadow: 3, 
                 borderRadius: 2,
-                backgroundColor: 'white'
+                backgroundColor: state.isDark ? state.secondaryColor : state.lightColor
             }}>
-                <Typography variant="h5" align="center" gutterBottom>
+                <Typography variant="h5" align="center" gutterBottom color={state.isDark ? state.lightColor : state.darkColor}>
                     Create Account
                 </Typography>
                 
@@ -180,7 +183,7 @@ const Register = () => {
                     </Button>
                 </form>
                 
-                <Typography variant="body2" align="center">
+                <Typography variant="body2" align="center" sx={{color: state.isDark ? state.lightColor : state.darkColor}}>
                     Already have an account?{' '}
                     <Link component={RouterLink} to="/login">
                         Login here

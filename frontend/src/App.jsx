@@ -9,8 +9,9 @@ import Dashboard from './components/Dashboard';
 // import { useTheme } from '@emotion/react';
 import { useTheme } from './context/ThemeContext.jsx';
 // import { useTodos, TodosProvider } from './context/TodosProvider.jsx';
-import { Button } from '@mui/material';
-// import { To }
+import { Button, Checkbox, Icon } from '@mui/material';
+// import MoonIcon from '@mui/core-downloads-tracker';
+// import SunIcon from '@mui/material'
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -30,7 +31,6 @@ const ProtectedRoute = ({ children }) => {
 const AppContent = (props) => {
 
     // const { dispatch, state } = useTodos();
-
     // dispatch({type: "AddTodo", payload: { id: 5, title: 'Todo 1', completed: false, priority: 'urgent' }});
 
     return (
@@ -53,21 +53,27 @@ const AppContent = (props) => {
 
 const App = () => {
     const { dispatch, state } = useTheme();
-    // console.log(dispatch, state);
 
     return (
-        <Router className={`${state.isDark ? 'darkMode' : 'lightMode'}`}>
+        <Router>
             <Button
                 type="button"
                 variant="contained"
                 color="primary"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mr: 5, ml: 'auto', mb: 2, display: 'block', position: "relative"}}
                 onClick={() => { dispatch({type: "switchDark", payload: !state.isDark}) }}
             >
-                Switch Mode
+                <Checkbox 
+                    checked={state.isDark}
+                    color="transparent"
+                    style={{width: "100%", position: "absolute", top: 0, left: 0, height: "100%", opacity: 0, appearance: "none", accentColor: "none"}}
+                />
+                {/* <Icon sx={{borderRadius: "50%", width: "25px", height: "25px"}}> */}
+                    { state.isDark ?  "Light" : "Dark"}
+                {/* </Icon> */}
             </Button>
             <AuthProvider>
-                <AppContent isDark={`${state.isDark ? 'darkMode' : 'lightMode'}`} />
+                <AppContent />
             </AuthProvider>
         </Router>
     );

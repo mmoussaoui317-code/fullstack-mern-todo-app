@@ -1,38 +1,60 @@
 import React, { useState } from 'react';
-import { Link, TextField, Button, Container, Typography, Box, CircularProgress } from '@mui/material';
+import { Link, TextField, Button, Container, Typography, Box, CircularProgress, Alert } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 import { sanitizeUserInput } from '../utils/inputSanitizer';
 // import { config } from '../config';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 
-const Login = (props) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [alertMsg, setAlertMsg] = useState(null);
     const navigate = useNavigate();
 
     const { login } = useAuth();
+    const { state } = useTheme();
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        try {
+        // try {
             // const response = await axios.post(`${config.apiUrl}/api/auth/login`, {
             //     email,
             //     password
             // });
             // console.log(email, password);
             // console.log('Login successful:', response.data);
-            // alert('Login successful! Check console for token');
             // navigate('/dashboard');
             const response = await login(email, password);
-            response.success && navigate('/dashboard');
-        } catch (error) {
-            console.error('Login error:', error);
-            alert('Login failed!');
-        }
+            if(response.success) {
+                navigate('/dashboard');
+                setAlertMsg({
+                    msg: 'Login Successful!',
+                    payload: 'success'
+                });
+                // alert('Login successful!');
+            } else {
+                setAlertMsg( {
+                    msg: 'Login failed!!',
+                    payload: 'error'
+                });
+                // alert('Login failed!');
+                console.error('Login error:', response.message);
+            }
+            
+        // } catch (error) {
+        //     setAlertMsg( {
+        //         msg: 'Login failed!!',
+        //         payload: 'error'
+        //     });
+        //     // alert('Login failed!');
+        //     console.error('Login error:', error);
+        // }
         setLoading(false);
     };
 
@@ -47,11 +69,16 @@ const Login = (props) => {
     };
 
     return (
-        <Container maxWidth="xs" style={{backgroundColor: props.isDark === 'darkMode' ? 'black' : 'white', color: props.isDark === 'darkMode' ? 'white' : 'black' }}>
+        <Container maxWidth="xs" xs={{backgroundColor: state.isDark ? state.darkColor : state.lightColor, color: state.isDark ? state.lightColor : state.darkColor, overflow: "hidden" }}>
             <Box sx={{ mt: 8, p: 3, boxShadow: 3, borderRadius: 2 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Login to Todo App
                 </Typography>
+                {
+                    alertMsg && <Alert severity={alertMsg.payload} sx={{ mb: 2 }}>
+                                {alertMsg.msg}
+                            </Alert>
+                }
                 <form onSubmit={handleSubmit}>
                     <TextField
                         fullWidth
@@ -62,6 +89,7 @@ const Login = (props) => {
                         margin="normal"
                         required
                         autoComplete="email"
+                        sx={{color: `${state.isDark ? state.lightColor : state.darkColor} !important`, background: state.isDark ? state.secondaryColor : state.lightColor}}
                     />
                     <TextField
                         fullWidth
@@ -83,10 +111,12 @@ const Login = (props) => {
                         {loading ? <CircularProgress size={24} /> : 'Login'}
                     </Button>
                 </form>
-                <Typography variant="body2" align="center">
+                <Typography variant="body2" align="center"
+                            sx={{color: state.isDark ? state.lightColor : state.darkColor}}
+                >
                     Demo: Use any email/password for now
                 </Typography>
-                <Typography variant="body2" align="center" sx={{ mt: 2, color: 'text.secondary' }}>
+                <Typography variant="body2" align="center" sx={{ mt: 2, color: state.isDark ? state.lightColor : state.darkColor }}>
                     I don't have an account?{' '}
                     <Link component={RouterLink} to="/register">
                         Register here

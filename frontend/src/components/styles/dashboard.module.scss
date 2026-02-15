@@ -1,0 +1,13 @@
+.dark {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+    border-radius: 5px;
+}
+
+div.dark:has(fieldset) {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
+    border-radius: 5px;
+}

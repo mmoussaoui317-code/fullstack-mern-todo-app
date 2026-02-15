@@ -40,6 +40,9 @@ export const ThemeProvider = ({ children }) => {
     // const toggleDarkMode = () => setDarkMode(!darkMode);
     const initialState = {
         isDark: false,
+        lightColor: "#fff",
+        darkColor: "#000",
+        secondaryColor: "#333",
     }
 
     const [state, dispatch] = useReducer(ThemeReducer, initialState);
