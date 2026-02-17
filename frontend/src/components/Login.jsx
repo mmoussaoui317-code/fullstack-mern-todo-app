@@ -12,13 +12,40 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [alertMsg, setAlertMsg] = useState(null);
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     const { login } = useAuth();
     
 
+    const dataFormValidation = () => {
+        let valid = true;
+        if(email.trim() === '') {
+            setErrors(prv => { return {...prv, email: "The Email Is Required !!"} });
+            valid = false;
+        } else if(!(/^\w+@\w+\.com/.test(email.trim()))) {
+            setErrors(prv => { return {...prv, email: "Your Email Doesn't respect format xxx@xxx.com" } })
+            valid = false;
+        }
+
+        if(password.trim() === '') {
+            setErrors(prv => { return {...prv, password: "Password Is Required"}});
+            valid = false;
+        } else if(!(/\w+\d+/.test(password.trim())) || password.toString().length < 8) {
+            setErrors(prv => { return {...prv, password: "Password Must bigger then 8 char and has just chars and numbers"} });
+            valid = false;
+        }
+        
+        return valid;
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(!dataFormValidation()) {
+            return;
+        } else {
+            setErrors({});
+        }
         setLoading(true);
         // try {
             // const response = await axios.post(`${config.apiUrl}/api/auth/login`, {
@@ -28,6 +55,7 @@ const Login = () => {
             // console.log(email, password);
             // console.log('Login successful:', response.data);
             // navigate('/dashboard');
+
             const response = await login(email, password);
             if(response.success) {
                 navigate('/dashboard');
@@ -90,6 +118,8 @@ const Login = () => {
                             margin="normal"
                             required
                             autoComplete="email"
+                            error={errors.email}
+                            helperText={errors.email}
                             // sx={{color: `${state.isDark ? state.lightColor : state.darkColor} !important`, background: state.isDark ? state.secondaryColor : state.lightColor}}
                         />
 
@@ -102,6 +132,9 @@ const Login = () => {
                             margin="normal"
                             required
                             autoComplete="current-password"
+                            error={!!errors.password}
+                            helperText={errors.password}
+                            // onBlur={dataFormValidation}
                         />
 
                     <Button
@@ -114,7 +147,7 @@ const Login = () => {
                         {loading ? <CircularProgress size={24} /> : 'Login'}
                     </Button>
                 </form>
-                <Typography variant="body2" align="center"
+                <Typography variant="body2" align="center" sx={{mb: 2}}
                             // sx={{color: state.isDark ? state.lightColor : state.darkColor}}
                 >
                     Demo: Use any email/password for now

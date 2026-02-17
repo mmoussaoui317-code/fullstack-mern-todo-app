@@ -98,9 +98,9 @@ const Register = () => {
     };
 
     return (
-        <Container maxWidth="xs" 
-        // sx={{color: state.isDark ? state.lightColor : state.darkColor, bgcolor: state.isDark ? state.secondaryColor : state.lightColor}}
-        >
+        <Container maxWidth="xs">
+        {/* // sx={{color: state.isDark ? state.lightColor : state.darkColor, bgcolor: state.isDark ? state.secondaryColor : state.lightColor}} */}
+        {/* > */}
             <Box sx={{ 
                 mt: 8, 
                 p: 3, 
@@ -133,7 +133,7 @@ const Register = () => {
                             margin="normal"
                             disabled={loading}
                             autoComplete="username"
-                            // onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
+                            onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
                         />
                         
                         <TextField
@@ -148,6 +148,7 @@ const Register = () => {
                             margin="normal"
                             disabled={loading}
                             autoComplete="email"
+                            onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
                         />
                         
                         <TextField
@@ -162,6 +163,7 @@ const Register = () => {
                             margin="normal"
                             disabled={loading}
                             autoComplete="new-password"
+                            onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
                         />
                         
                         <TextField
@@ -176,6 +178,7 @@ const Register = () => {
                             margin="normal"
                             disabled={loading}
                             autoComplete="new-password"
+                            onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
                         />
                     
                     {/* </DarkThemeMUI> */}
