@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
+import { useTheme } from "../context/ThemeContext.jsx";
 
 
 export const SimpleDragDrop = ({items, onReorder}) => {
     const [draggingIndex, setDraggingIndex] = useState(null);
     const [dragOverIndex, setDragOverIndex] = useState(null);
     const dragItem = useRef(null);
+    const { state } = useTheme();
     const handleDragStart = (e, index) => {
         dragItem.current = index;
         setDraggingIndex(index);
@@ -54,13 +56,15 @@ export const SimpleDragDrop = ({items, onReorder}) => {
                             onDragEnd={handleDragEnd}
                             className={`drag-item ${ draggingIndex === index ? 'dragging' : "" } ${ dragOverIndex === index ? "drag-over" : ""}`}
                             style={{    opacity: draggingIndex === index ? 0.5 : 1,
-                                        backgroundColor: dragOverIndex === index ? "#e3f2fd" : "white",
-                                        border: "1px solid #e3f2fd",
+                                        backgroundColor: dragOverIndex === index ? "#e3f2fd" : `${ state.isDark ? state.darkColor : state.lightColor }`,
+                                        border: `1px solid ${ state.isDark ? state.darkColor : state.lightColor }`,
                                         padding: "10px",
                                         margin: "5px 0px",
                                         borderRadius: "5px",
                                         cursor: "grab",
                                         transition: "all 0.2s ease-in-out",
+                                        textTransform: "capitalize",
+                                        fontHeight: "bold",
                             }}
                         >
                             <div style={{display: "flex", alignItems: "center", gap: "10px"}}>

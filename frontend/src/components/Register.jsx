@@ -6,6 +6,7 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext.jsx';
+// import { DarkThemeMUI } from '../context/DarkThemeMUI.jsx';
 
 import { sanitizeUserInput } from '../utils/inputSanitizer';
 
@@ -116,61 +117,64 @@ const Register = () => {
                 )}
                 
                 <form onSubmit={handleSubmit}>
-                    <TextField
-                        fullWidth
-                        label="Username"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        error={!!errors.username}
-                        helperText={errors.username}
-                        margin="normal"
-                        disabled={loading}
-                        autoComplete="username"
-                    />
+                    {/* <DarkThemeMUI> */}
+                        <TextField
+                            fullWidth
+                            label="Username"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            error={!!errors.username}
+                            helperText={errors.username}
+                            margin="normal"
+                            disabled={loading}
+                            autoComplete="username"
+                        />
+                        
+                        <TextField
+                            fullWidth
+                            label="Email"
+                            name="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            error={!!errors.email}
+                            helperText={errors.email}
+                            margin="normal"
+                            disabled={loading}
+                            autoComplete="email"
+                        />
+                        
+                        <TextField
+                            fullWidth
+                            label="Password"
+                            name="password"
+                            type="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            error={!!errors.password}
+                            helperText={errors.password}
+                            margin="normal"
+                            disabled={loading}
+                            autoComplete="new-password"
+                        />
+                        
+                        <TextField
+                            fullWidth
+                            label="Confirm Password"
+                            name="confirmPassword"
+                            type="password"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            error={!!errors.confirmPassword}
+                            helperText={errors.confirmPassword}
+                            margin="normal"
+                            disabled={loading}
+                            autoComplete="new-password"
+                        />
                     
-                    <TextField
-                        fullWidth
-                        label="Email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        error={!!errors.email}
-                        helperText={errors.email}
-                        margin="normal"
-                        disabled={loading}
-                        autoComplete="email"
-                    />
-                    
-                    <TextField
-                        fullWidth
-                        label="Password"
-                        name="password"
-                        type="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        error={!!errors.password}
-                        helperText={errors.password}
-                        margin="normal"
-                        disabled={loading}
-                        autoComplete="new-password"
-                    />
-                    
-                    <TextField
-                        fullWidth
-                        label="Confirm Password"
-                        name="confirmPassword"
-                        type="password"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        error={!!errors.confirmPassword}
-                        helperText={errors.confirmPassword}
-                        margin="normal"
-                        disabled={loading}
-                        autoComplete="new-password"
-                    />
-                    
+                    {/* </DarkThemeMUI> */}
+
                     <Button
                         fullWidth
                         type="submit"

@@ -43,6 +43,8 @@ export const ThemeProvider = ({ children }) => {
         lightColor: "#fff",
         darkColor: "#000",
         secondaryColor: "#333",
+        fieldsetColor: "#3333336e",
+
     }
 
     const [state, dispatch] = useReducer(ThemeReducer, initialState);

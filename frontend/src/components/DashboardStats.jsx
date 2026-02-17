@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 const DashboardStats = ({ todos }) => {
-    // Calculate completion data
+    
     const completionData = [
         { name: 'Done', value: todos.filter(t => t.completed).length, color: '#10b981' },
         { name: 'Not Done', value: todos.filter(t => !t.completed).length, color: '#ef4444' }

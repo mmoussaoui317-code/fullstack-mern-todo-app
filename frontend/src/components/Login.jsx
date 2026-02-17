@@ -5,8 +5,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { sanitizeUserInput } from '../utils/inputSanitizer';
 // import { config } from '../config';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
-
+// import { DarkThemeMUI } from '../context/DarkThemeMUI';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -16,7 +15,6 @@ const Login = () => {
     const navigate = useNavigate();
 
     const { login } = useAuth();
-    const { state } = useTheme();
     
 
     const handleSubmit = async (e) => {
@@ -69,7 +67,10 @@ const Login = () => {
     };
 
     return (
-        <Container maxWidth="xs" xs={{backgroundColor: state.isDark ? state.darkColor : state.lightColor, color: state.isDark ? state.lightColor : state.darkColor, overflow: "hidden" }}>
+        // <DarkThemeMUI>
+        <Container maxWidth="xs" 
+        // xs={{backgroundColor: state.isDark ? state.secondaryColor : state.lightColor, color: state.isDark ? state.lightColor : state.darkColor, overflow: "hidden" }}
+        >
             <Box sx={{ mt: 8, p: 3, boxShadow: 3, borderRadius: 2 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Login to Todo App
@@ -80,27 +81,29 @@ const Login = () => {
                             </Alert>
                 }
                 <form onSubmit={handleSubmit}>
-                    <TextField
-                        fullWidth
-                        label="Email"
-                        type="email"
-                        value={email}
-                        onChange={handleInputChange}
-                        margin="normal"
-                        required
-                        autoComplete="email"
-                        sx={{color: `${state.isDark ? state.lightColor : state.darkColor} !important`, background: state.isDark ? state.secondaryColor : state.lightColor}}
-                    />
-                    <TextField
-                        fullWidth
-                        label="Password"
-                        type="password"
-                        value={password}
-                        onChange={handleInputChange}
-                        margin="normal"
-                        required
-                        autoComplete="current-password"
-                    />
+                        <TextField
+                            fullWidth
+                            label="Email"
+                            type="email"
+                            value={email}
+                            onChange={handleInputChange}
+                            margin="normal"
+                            required
+                            autoComplete="email"
+                            // sx={{color: `${state.isDark ? state.lightColor : state.darkColor} !important`, background: state.isDark ? state.secondaryColor : state.lightColor}}
+                        />
+
+                        <TextField
+                            fullWidth
+                            label="Password"
+                            type="password"
+                            value={password}
+                            onChange={handleInputChange}
+                            margin="normal"
+                            required
+                            autoComplete="current-password"
+                        />
+
                     <Button
                         fullWidth
                         type="submit"
@@ -112,11 +115,13 @@ const Login = () => {
                     </Button>
                 </form>
                 <Typography variant="body2" align="center"
-                            sx={{color: state.isDark ? state.lightColor : state.darkColor}}
+                            // sx={{color: state.isDark ? state.lightColor : state.darkColor}}
                 >
                     Demo: Use any email/password for now
                 </Typography>
-                <Typography variant="body2" align="center" sx={{ mt: 2, color: state.isDark ? state.lightColor : state.darkColor }}>
+                <Typography variant="body2" align="center" 
+                // sx={{ mt: 2, color: state.isDark ? state.lightColor : state.darkColor }}
+                >
                     I don't have an account?{' '}
                     <Link component={RouterLink} to="/register">
                         Register here
@@ -124,7 +129,37 @@ const Login = () => {
                 </Typography>
             </Box>
         </Container>
+        // </DarkThemeMUI>
     );
 };
 
 export default Login;
+
+/***
+ * This Also Can You Used To Change The Theme
+ *  But It's Not Perfect
+ *  you can access from the DevTools Console to see The names of the classes
+ */
+
+// sx={{
+//     "& .MuiFormLabel-root": {
+//         color: state.isDark ? state.lightColor : state.darkColor,
+//     },
+
+//     "& .MuiInputBase-root": {
+//         bgcolor: state.isDark ? state.darkColor : state.lightColor,
+//         color: state.isDark ? state.lightColor : state.darkColor,
+
+//         "& input.MuiInputBase-input": {
+//             color: state.isDark ? state.lightColor : state.darkColor,
+//             accentColor: state.isDark ? state.lightColor : state.darkColor,
+//             bgcolor: state.isDark ? state.darkColor : state.lightColor,
+
+//         },
+
+//         "& fieldset.MuiOutlinedInput-notchedOutline": {
+//             bgcolor: state.isDark ? state.fieldsetColor : state.lightColor,
+//             borderColor: state.isDark ? state.lightColor : state.darkColor
+//         }
+//     }
+// }}

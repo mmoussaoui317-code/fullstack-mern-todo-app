@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext.jsx';
-import { AuthProvider } from './context/AuthProvider.jsx';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
@@ -9,7 +8,7 @@ import Dashboard from './components/Dashboard';
 // import { useTheme } from '@emotion/react';
 import { useTheme } from './context/ThemeContext.jsx';
 // import { useTodos, TodosProvider } from './context/TodosProvider.jsx';
-import { Button, Checkbox, Icon } from '@mui/material';
+import { Button, Checkbox, Box } from '@mui/material';
 // import MoonIcon from '@mui/core-downloads-tracker';
 // import SunIcon from '@mui/material'
 
@@ -28,14 +27,14 @@ const ProtectedRoute = ({ children }) => {
     return children;
 };
 
-const AppContent = (props) => {
+const AppContent = () => {
 
     // const { dispatch, state } = useTodos();
     // dispatch({type: "AddTodo", payload: { id: 5, title: 'Todo 1', completed: false, priority: 'urgent' }});
 
     return (
         <Routes>
-            <Route path="/login" element={<Login isDark={props.isDark} />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route 
                 path="/dashboard" 
@@ -53,14 +52,16 @@ const AppContent = (props) => {
 
 const App = () => {
     const { dispatch, state } = useTheme();
+    const { logout } = useAuth();
 
     return (
         <Router>
-            <Button
+            <Box sx={{display: 'flex', alignItems: 'center', gap: 2, width: "fit-content", ml: 'auto'}}>
+                <Button
                 type="button"
                 variant="contained"
                 color="primary"
-                sx={{ mr: 5, ml: 'auto', mb: 2, display: 'block', position: "relative"}}
+                sx={{ /*mr: 5, ml: 'auto', mb: 2,*/ display: 'block', position: "relative", bgcolor: state.isDark ? state.lightColor : state.darkColor}}
                 onClick={() => { dispatch({type: "switchDark", payload: !state.isDark}) }}
             >
                 <Checkbox 
@@ -72,9 +73,17 @@ const App = () => {
                     { state.isDark ?  "Light" : "Dark"}
                 {/* </Icon> */}
             </Button>
-            <AuthProvider>
+            {
+                localStorage.getItem('token') && <Button 
+                    variant="outlined" 
+                    onClick={logout}
+                    // sx={{ position: 'absolute', ml: 'auto', top: '15px', right: '25px' }}
+                >
+                    Logout
+                </Button>
+            }
+            </Box>
                 <AppContent />
-            </AuthProvider>
         </Router>
     );
 };

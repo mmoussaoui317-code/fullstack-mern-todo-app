@@ -6,13 +6,14 @@ import {
 } from '@mui/material';
 // import DeleteIcon from '@mui/';
 import { useAuth } from '../context/AuthContext.jsx';
-import { useTheme } from '../context/ThemeContext.jsx';
+// import { DarkThemeMUI } from '../context/DarkThemeMUI.jsx';
+// import { useTheme } from '../context/ThemeContext.jsx';
 import { TodoList } from './TodoList.jsx';
 import axios from 'axios';
 import { config } from '../config.js';
-import DashboardStats from './DashboardStats.jsx';
+// import DashboardStats from './DashboardStats.jsx';
 import { SimpleDragDrop } from './SimpleDragDrop.jsx';
-import styles from "./styles/dashboard.module.scss"
+// import styles from "./styles/dashboard.module.scss"
 
 
 const Dashboard = () => {
@@ -20,8 +21,8 @@ const Dashboard = () => {
     const [newTodo, setNewTodo] = useState({ title: '', description: '' });
     // const [completed, setCompleted] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { user, logout } = useAuth();
-    const { state } = useTheme();
+    const { user } = useAuth();
+    // const { state } = useTheme();
     
     // useEffect(() => {
     //     fetchTodos();
@@ -51,30 +52,33 @@ const Dashboard = () => {
         }
     };
 
-    const [preList, setPreList] = useState([
-        { id: 1, title: 'حل واجبات البرمجة' },
-        { id: 2, title: 'استكشاف المدينة' },
-        { id: 3, title: 'الذهاب للصالة الرياضية' }
-    ]);
+    // const [preList, setPreList] = useState([
+    //     { id: 1, title: 'حل واجبات البرمجة' },
+    //     { id: 2, title: 'استكشاف المدينة' },
+    //     { id: 3, title: 'الذهاب للصالة الرياضية' }
+    // ]);
 
 
     return (
-        <Container maxWidth="md" sx={{overflow: 'hidden', padding: 4, borderRadius: 4, position: 'relative', color: state.isDark ? state.lightColor : state.darkColor, bgcolor: state.isDark ? state.darkColor : state.lightColor}}>
+        // <DarkThemeMUI>
+        <Container maxWidth="md" 
+        // sx={{overflow: 'hidden', padding: 4, borderRadius: 4, position: 'relative', color: state.isDark ? state.lightColor : state.darkColor, bgcolor: state.isDark ? state.darkColor : state.lightColor}}
+        >
             <Box>
                 <Typography variant="h4" gutterBottom>
                     Welcome, {user?.username || 'User'}!
                 </Typography>
                 
                 {/* Add New Todo  */}
-                <Box sx={{ mb: 4, p: 2, bgcolor: state.isDark ? state.secondaryColor : state.lightColor, borderRadius: 1 }}>
+                <Box sx={{ mb: 4, p: 2/*, bgcolor: state.isDark ? state.secondaryColor : state.lightColor, borderRadius: 1*/ }}>
                     <TextField
                         fullWidth
                         label="Todo Title"
                         value={newTodo.title}
                         onChange={(e) => setNewTodo({...newTodo, title: e.target.value})}
                         margin="normal"
-                        sx={{ color: state.isDark ? state.lightColor : state.darkColor }}
-                        classes={state.isDark ? styles.dark : ""}
+                        // sx={{ color: state.isDark ? state.lightColor : state.darkColor }}
+                        // classes={state.isDark ? styles.dark : ""}
                     />
                     <TextField
                         fullWidth
@@ -83,13 +87,13 @@ const Dashboard = () => {
                         onChange={(e) => setNewTodo({...newTodo, description: e.target.value})}
                         margin="normal"
                         // sx={{overflow: 'hidden' }}
-                        className={state.isDark ? "dark" : ""}
+                        // className={state.isDark ? "dark" : ""}
                     />
                     <Button
                         variant="contained"
                         onClick={handleAddTodo}
                         disabled={loading || !newTodo.title.trim()}
-                        color={state.isDark ? state.lightColor : state.darkColor}
+                        // color={state.isDark ? state.lightColor : state.darkColor}
                         sx={{ mt: 2 }}
                     >
                         {loading ? <CircularProgress size={24} /> : 'Add Todo'}
@@ -117,26 +121,22 @@ const Dashboard = () => {
                     {/* // ))} */}
                 {/* </List> */}
 
-                <TodoList todos={todos} onReorder={setTodos} />
+                {/* <TodoList todos={todos} onReorder={setTodos} /> */}
                 
                 {todos.length === 0 && (
-                    <Typography align="center" sx={{color: state.isDark ? state.lightColor : state.secondaryColor}}>
+                    <Typography align="center" 
+                    // sx={{color: state.isDark ? state.lightColor : state.secondaryColor}}
+                    >
                         No todos yet. Add your first todo!
                     </Typography>
                 )}
                 
-                <DashboardStats todos={ todos || [] } />
+                <SimpleDragDrop items={todos} onReorder={setTodos} />
+                {/* <DashboardStats todos={ todos || [] } /> */}
             </Box>
-
-            <Button 
-                variant="outlined" 
-                onClick={logout}
-                sx={{ position: 'absolute', ml: 'auto', top: '15px', right: '25px' }}
-            >
-                Logout
-            </Button>
-            <SimpleDragDrop items={preList} onReorder={setPreList} />
         </Container>
+        // {/* </DarkThemeMUI> */}
+
     );
 };
 
