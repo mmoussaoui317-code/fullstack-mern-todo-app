@@ -98,15 +98,19 @@ const Register = () => {
     };
 
     return (
-        <Container maxWidth="xs" sx={{color: state.isDark ? state.lightColor : state.darkColor, bgcolor: state.isDark ? state.secondaryColor : state.lightColor}}>
+        <Container maxWidth="xs" 
+        // sx={{color: state.isDark ? state.lightColor : state.darkColor, bgcolor: state.isDark ? state.secondaryColor : state.lightColor}}
+        >
             <Box sx={{ 
                 mt: 8, 
                 p: 3, 
                 boxShadow: 3, 
                 borderRadius: 2,
-                backgroundColor: state.isDark ? state.secondaryColor : state.lightColor
+                // backgroundColor: state.isDark ? state.secondaryColor : state.lightColor
             }}>
-                <Typography variant="h5" align="center" gutterBottom color={state.isDark ? state.lightColor : state.darkColor}>
+                <Typography variant="h5" align="center" gutterBottom 
+                // color={state.isDark ? state.lightColor : state.darkColor}
+                >
                     Create Account
                 </Typography>
                 
@@ -124,11 +128,12 @@ const Register = () => {
                             name="username"
                             value={formData.username}
                             onChange={handleChange}
-                            error={!!errors.username}
+                            error={errors.username}
                             helperText={errors.username}
                             margin="normal"
                             disabled={loading}
                             autoComplete="username"
+                            // onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
                         />
                         
                         <TextField
@@ -138,7 +143,7 @@ const Register = () => {
                             type="email"
                             value={formData.email}
                             onChange={handleChange}
-                            error={!!errors.email}
+                            error={errors.email}
                             helperText={errors.email}
                             margin="normal"
                             disabled={loading}
@@ -152,7 +157,7 @@ const Register = () => {
                             type="password"
                             value={formData.password}
                             onChange={handleChange}
-                            error={!!errors.password}
+                            error={errors.password}
                             helperText={errors.password}
                             margin="normal"
                             disabled={loading}
@@ -166,7 +171,7 @@ const Register = () => {
                             type="password"
                             value={formData.confirmPassword}
                             onChange={handleChange}
-                            error={!!errors.confirmPassword}
+                            error={errors.confirmPassword}
                             helperText={errors.confirmPassword}
                             margin="normal"
                             disabled={loading}

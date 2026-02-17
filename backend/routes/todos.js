@@ -8,8 +8,7 @@ router.post("/", authMiddleware, async(req, res) => {
     try {
         const {title, description} = req.body;
 
-        console.log(req.body, req.userId);
-
+        // console.log(req.body, req.userId);
 
         const todo = await Todo.create({
             title,

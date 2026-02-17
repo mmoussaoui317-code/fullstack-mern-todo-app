@@ -19,9 +19,10 @@ import { SimpleDragDrop } from './SimpleDragDrop.jsx';
 const Dashboard = () => {
     const [todos, setTodos] = useState([]);
     const [newTodo, setNewTodo] = useState({ title: '', description: '' });
-    // const [completed, setCompleted] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
     const { user } = useAuth();
+    // const [completed, setCompleted] = useState(false);
     // const { state } = useTheme();
     
     // useEffect(() => {
@@ -37,11 +38,27 @@ const Dashboard = () => {
     //     }
     // };
 
+    const validationFrom = () => {
+        let validity = true;
+        if(newTodo.title.trim().length > 100) {
+            setErrors(prv => { return {...prv, title: "Title Must be Less Then 100 Characters!!"}}); 
+            validity = false;
+        } else if(newTodo.description.trim() > 1000) {
+            setErrors(prv => { return {...prv, description: "Description Must be Less Then 1000 Characters!!"}});
+            validity = false;
+        } else {
+            setErrors({});
+            validity = true;
+        }
+
+        return validity;
+    }
+
     const handleAddTodo = async () => {
         if (!newTodo.title.trim()) return;
-        
-        setLoading(true);
+            setLoading(true);
         try {
+            if(validationFrom()) return; 
             const response = await axios.post(`${config.apiUrl}/api/todos`, newTodo);
             setTodos([...todos, response.data.data]);
             setNewTodo({ title: '', description: '' });
@@ -51,12 +68,6 @@ const Dashboard = () => {
             setLoading(false);
         }
     };
-
-    // const [preList, setPreList] = useState([
-    //     { id: 1, title: 'حل واجبات البرمجة' },
-    //     { id: 2, title: 'استكشاف المدينة' },
-    //     { id: 3, title: 'الذهاب للصالة الرياضية' }
-    // ]);
 
 
     return (
@@ -77,18 +88,23 @@ const Dashboard = () => {
                         value={newTodo.title}
                         onChange={(e) => setNewTodo({...newTodo, title: e.target.value})}
                         margin="normal"
-                        // sx={{ color: state.isDark ? state.lightColor : state.darkColor }}
-                        // classes={state.isDark ? styles.dark : ""}
+                        onBlur={() => {validationFrom()}}
+                        error={errors.title}
+                        helperText={errors.title}
                     />
+                    {/* {  ? <span className={styles.error_span}>{errors.title}</span> : null } */}
+
                     <TextField
                         fullWidth
                         label="Description (Optional)"
                         value={newTodo.description}
                         onChange={(e) => setNewTodo({...newTodo, description: e.target.value})}
                         margin="normal"
-                        // sx={{overflow: 'hidden' }}
-                        // className={state.isDark ? "dark" : ""}
+                        onBlur={() => {validationFrom()}}
+                        error={errors.description}
+                        helperText={errors.description}
                     />
+                    {/* {  ? <span className={styles.error_span}>{errors.title}</span> : null } */}
                     <Button
                         variant="contained"
                         onClick={handleAddTodo}
