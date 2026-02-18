@@ -1,3 +1,44 @@
+export function dataFormValidation(dataObjFrom) {
+    const keys = Object.keys(dataObjFrom);
+    let validity = {};
+        validity = { valid: true, errors: {}}
+    keys.forEach(key => {
+
+        if(key != 'description' && dataObjFrom[key].trim().length === 0) {
+            validity = { valid: false, errors: {  ...validity.errors, [key]: `The ${key} Is Required!` }};
+            return validity;
+        }
+
+        if (key.toLocaleLowerCase() === 'username' &&  key.toLowerCase().length < 3) {
+            validity = {valid: false, errors: { ...validity.errors, [key]: `The ${key} Must Be at least 3 characters!!` }}; return;
+        }
+
+        if(key.toLocaleLowerCase() === "title" && dataObjFrom[key].trim().length > 100) {
+            validity = {valid: false, errors: { ...validity.errors, [key]: `The ${key} Must Be Less Then 100 Chars!!` }}; return;
+        }
+
+        if(key.toLowerCase() === "description" && dataObjFrom[key].trim().length > 1000) {
+            validity = { valid: false, errors: { ...validity.errors, [key]: `The ${key} Must Be Less Then 1000 Chars` }}; return;
+        }
+
+        if(key.toLowerCase() === "email" && !(/\w+@\w+\.com/.test(dataObjFrom[key].trim())) ) {
+            validity = { valid: false, errors: { ...validity.errors, [key]: `The ${key} Format Is Incorrect!` }}; return;
+        }
+
+        if(key.toLowerCase() === "password" && !(/[\w\d-]{8,}/.test(dataObjFrom[key].trim()))) {
+            validity = { valid: false, errors: { ...validity.errors, [key]: `The ${key} Must contain chars and numbers and bigger then 8 chars`}}; return;
+        }
+
+        if (key.toLocaleLowerCase() === 'confirmPassword'.toLocaleLowerCase() && dataObjFrom[key].trim() !== dataObjFrom['password'].trim()) {
+            validity = { valid: false, errors: { ...validity.errors, [key]: `Passwords do not match`}}; return;
+        }
+
+    });
+
+    return validity;
+}
+
+
 // export const validationFrom = (inputContent) => {
 //     let validity = {valid: true};
 //     if(inputContent.title.trim().length > 100) {
@@ -61,43 +102,3 @@
 //         setErrors(newErrors);
 //         return Object.keys(newErrors).length === 0;
 //     };
-
-export function dataFormValidation(dataObjFrom) {
-    const keys = Object.keys(dataObjFrom);
-    let validity = {};
-        validity = { valid: true, errors: {}}
-    keys.forEach(key => {
-
-        if(dataObjFrom[key].trim().length === 0) {
-            validity = { valid: false, errors: {  ...validity.errors, [key]: `The ${key} Is Required!` }};
-            return validity;
-        }
-
-        if (key.toLocaleLowerCase() === 'username' &&  key.toLowerCase().length < 3) {
-            validity = {valid: false, errors: { ...validity.errors, [key]: `The ${key} Must Be at least 3 characters!!` }}; return;
-        }
-
-        if(key.toLocaleLowerCase() === "title" && dataObjFrom[key].trim().length > 100) {
-            validity = {valid: false, errors: { ...validity.errors, [key]: `The ${key} Must Be Less Then 100 Chars!!` }}; return;
-        }
-
-        if(key.toLowerCase() === "description" && dataObjFrom[key].trim().length > 1000) {
-            validity = { valid: false, errors: { ...validity.errors, [key]: `The ${key} Must Be Less Then 1000 Chars` }}; return;
-        }
-
-        if(key.toLowerCase() === "email" && !(/\w+@\w+\.com/.test(dataObjFrom[key].trim())) ) {
-            validity = { valid: false, errors: { ...validity.errors, [key]: `The ${key} Format Is Incorrect!` }}; return;
-        }
-
-        if(key.toLowerCase() === "password" && !(/[\w\d-]{8,}/.test(dataObjFrom[key].trim()))) {
-            validity = { valid: false, errors: { ...validity.errors, [key]: `The ${key} Must contain chars and numbers and bigger then 8 chars`}}; return;
-        }
-
-        if (key.toLocaleLowerCase() === 'confirmPassword'.toLocaleLowerCase() && dataObjFrom[key].trim() !== dataObjFrom['password'].trim()) {
-            validity = { valid: false, errors: { ...validity.errors, [key]: `Passwords do not match`}}; return;
-        }
-
-    });
-
-    return validity;
-}
