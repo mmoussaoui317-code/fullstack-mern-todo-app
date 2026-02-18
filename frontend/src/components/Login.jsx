@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, TextField, Button, Container, Typography, Box, CircularProgress, Alert } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
 import { sanitizeUserInput } from '../utils/inputSanitizer';
-// import { config } from '../config';
 import { useAuth } from '../context/AuthContext';
+import { dataFormValidation }  from '../utils/validationDataForm'
+// import { config } from '../config';
 // import { DarkThemeMUI } from '../context/DarkThemeMUI';
+// import axios from 'axios';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -18,34 +19,22 @@ const Login = () => {
     const { login } = useAuth();
     
 
-    const dataFormValidation = () => {
-        let valid = true;
-        if(email.trim() === '') {
-            setErrors(prv => { return {...prv, email: "The Email Is Required !!"} });
-            valid = false;
-        } else if(!(/^\w+@\w+\.com/.test(email.trim()))) {
-            setErrors(prv => { return {...prv, email: "Your Email Doesn't respect format xxx@xxx.com" } })
-            valid = false;
-        }
-
-        if(password.trim() === '') {
-            setErrors(prv => { return {...prv, password: "Password Is Required"}});
-            valid = false;
-        } else if(!(/\w+\d+/.test(password.trim())) || password.toString().length < 8) {
-            setErrors(prv => { return {...prv, password: "Password Must bigger then 8 char and has just chars and numbers"} });
-            valid = false;
-        }
-        
-        return valid;
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!dataFormValidation()) {
+        // if(!dataFormValidation()) {
+        //     return;
+        // } else {
+        //     setErrors({});
+        // }
+        const { valid, errors } = dataFormValidation( {email, password} );
+
+        if(!valid) {
+            setErrors(prv => { return {...prv, ...errors} });
             return;
         } else {
             setErrors({});
         }
+
         setLoading(true);
         // try {
             // const response = await axios.post(`${config.apiUrl}/api/auth/login`, {

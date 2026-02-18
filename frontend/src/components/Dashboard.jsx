@@ -4,15 +4,16 @@ import {
     Typography, List, ListItem, ListItemText,
     Checkbox, IconButton, CircularProgress
 } from '@mui/material';
-// import DeleteIcon from '@mui/';
 import { useAuth } from '../context/AuthContext.jsx';
-// import { DarkThemeMUI } from '../context/DarkThemeMUI.jsx';
-// import { useTheme } from '../context/ThemeContext.jsx';
-import { TodoList } from './TodoList.jsx';
 import axios from 'axios';
 import { config } from '../config.js';
-// import DashboardStats from './DashboardStats.jsx';
 import { SimpleDragDrop } from './SimpleDragDrop.jsx';
+import { dataFormValidation } from '../utils/validationDataForm.js';
+// import DeleteIcon from '@mui/';
+// import { DarkThemeMUI } from '../context/DarkThemeMUI.jsx';
+// import { useTheme } from '../context/ThemeContext.jsx';
+// import { TodoList } from './TodoList.jsx';
+// import DashboardStats from './DashboardStats.jsx';
 // import styles from "./styles/dashboard.module.scss"
 
 
@@ -38,27 +39,15 @@ const Dashboard = () => {
     //     }
     // };
 
-    const validationFrom = () => {
-        let validity = true;
-        if(newTodo.title.trim().length > 100) {
-            setErrors(prv => { return {...prv, title: "Title Must be Less Then 100 Characters!!"}}); 
-            validity = false;
-        } else if(newTodo.description.trim() > 1000) {
-            setErrors(prv => { return {...prv, description: "Description Must be Less Then 1000 Characters!!"}});
-            validity = false;
-        } else {
-            setErrors({});
-            validity = true;
-        }
-
-        return validity;
-    }
 
     const handleAddTodo = async () => {
         if (!newTodo.title.trim()) return;
             setLoading(true);
         try {
-            if(validationFrom()) return; 
+            const {valid, errors} = dataFormValidation(newTodo);
+            setErrors(prv => { return {...prv, ...errors} });
+            if(!valid) return;
+            
             const response = await axios.post(`${config.apiUrl}/api/todos`, newTodo);
             setTodos([...todos, response.data.data]);
             setNewTodo({ title: '', description: '' });
@@ -88,7 +77,7 @@ const Dashboard = () => {
                         value={newTodo.title}
                         onChange={(e) => setNewTodo({...newTodo, title: e.target.value})}
                         margin="normal"
-                        onBlur={() => {validationFrom()}}
+                        // onBlur={() => {validationFrom()}}
                         error={errors.title}
                         helperText={errors.title}
                     />
@@ -100,7 +89,7 @@ const Dashboard = () => {
                         value={newTodo.description}
                         onChange={(e) => setNewTodo({...newTodo, description: e.target.value})}
                         margin="normal"
-                        onBlur={() => {validationFrom()}}
+                        // onBlur={() => {validationFrom()}}
                         error={errors.description}
                         helperText={errors.description}
                     />
