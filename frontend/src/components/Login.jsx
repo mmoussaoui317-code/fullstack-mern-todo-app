@@ -28,12 +28,8 @@ const Login = () => {
         // }
         const { valid, errors } = dataFormValidation( {email, password} );
 
-        if(!valid) {
-            setErrors(prv => { return {...prv, ...errors} });
-            return;
-        } else {
-            setErrors({});
-        }
+        setErrors({ ...errors});
+        if(!valid) return;
 
         setLoading(true);
         // try {
@@ -107,8 +103,9 @@ const Login = () => {
                             margin="normal"
                             required
                             autoComplete="email"
-                            error={errors.email}
-                            helperText={errors.email}
+                            error={errors?.email}
+                            helperText={errors?.email}
+                            // onBlur={dataFormValidation}
                             // sx={{color: `${state.isDark ? state.lightColor : state.darkColor} !important`, background: state.isDark ? state.secondaryColor : state.lightColor}}
                         />
 
@@ -121,8 +118,8 @@ const Login = () => {
                             margin="normal"
                             required
                             autoComplete="current-password"
-                            error={!!errors.password}
-                            helperText={errors.password}
+                            error={errors?.password}
+                            helperText={errors?.password}
                             // onBlur={dataFormValidation}
                         />
 

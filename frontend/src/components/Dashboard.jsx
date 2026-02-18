@@ -45,7 +45,7 @@ const Dashboard = () => {
             setLoading(true);
         try {
             const {valid, errors} = dataFormValidation(newTodo);
-            setErrors(prv => { return {...prv, ...errors} });
+            setErrors({...errors});
             if(!valid) return;
             
             const response = await axios.post(`${config.apiUrl}/api/todos`, newTodo);

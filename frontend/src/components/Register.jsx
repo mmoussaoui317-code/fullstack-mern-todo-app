@@ -6,6 +6,7 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext.jsx';
+import { dataFormValidation } from '../utils/validationDataForm.js'
 // import { DarkThemeMUI } from '../context/DarkThemeMUI.jsx';
 
 import { sanitizeUserInput } from '../utils/inputSanitizer';
@@ -38,39 +39,14 @@ const Register = () => {
         }
     };
 
-    const validateForm = () => {
-        const newErrors = {};
-        
-        if (!formData.username.trim()) {
-            newErrors.username = 'Username is required';
-        } else if (formData.username.length < 3) {
-            newErrors.username = 'Username must be at least 3 characters';
-        }
-        
-        if (!formData.email.trim()) {
-            newErrors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            newErrors.email = 'Email is invalid';
-        }
-        
-        if (!formData.password) {
-            newErrors.password = 'Password is required';
-        } else if (formData.password.length < 8) {
-            newErrors.password = 'Password must be at least 8 characters';
-        }
-        
-        if (formData.password !== formData.confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match';
-        }
-        
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        if (!validateForm()) {
+        const { valid, errors } = dataFormValidation(formData);
+        setErrors({...errors});
+        if (!valid) {
             return;
         }
         
@@ -133,7 +109,7 @@ const Register = () => {
                             margin="normal"
                             disabled={loading}
                             autoComplete="username"
-                            onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
+                            // onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
                         />
                         
                         <TextField
@@ -148,7 +124,7 @@ const Register = () => {
                             margin="normal"
                             disabled={loading}
                             autoComplete="email"
-                            onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
+                            // onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
                         />
                         
                         <TextField
@@ -163,7 +139,7 @@ const Register = () => {
                             margin="normal"
                             disabled={loading}
                             autoComplete="new-password"
-                            onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
+                            // onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
                         />
                         
                         <TextField
@@ -178,7 +154,7 @@ const Register = () => {
                             margin="normal"
                             disabled={loading}
                             autoComplete="new-password"
-                            onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
+                            // onBlur={validateForm} // must be add to enhance the UX but for anyTextfield Nup All
                         />
                     
                     {/* </DarkThemeMUI> */}
