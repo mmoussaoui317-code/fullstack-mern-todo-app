@@ -10,6 +10,11 @@ const ThemeReducer = (state, action) => {
                 ...state,
                 isDark: action.payload,
             };
+        case "ShowForm": 
+            return {
+                ...state,
+                ShowForm: action.payload,
+            }
         default: 
             return state;
     }
@@ -44,6 +49,7 @@ export const ThemeProvider = ({ children }) => {
         darkColor: "#000",
         secondaryColor: "#333",
         fieldsetColor: "#3333336e",
+        ShowForm: false,
 
     }
 

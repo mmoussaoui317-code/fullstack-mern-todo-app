@@ -4,11 +4,11 @@ import { useAuth } from './context/AuthContext.jsx';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import { useTheme } from './context/ThemeContext.jsx';
+import { Button, Checkbox, Box, Typography } from '@mui/material';
 // import DashboardStats from './components/DashboardStats.jsx';
 // import { useTheme } from '@emotion/react';
-import { useTheme } from './context/ThemeContext.jsx';
 // import { useTodos, TodosProvider } from './context/TodosProvider.jsx';
-import { Button, Checkbox, Box } from '@mui/material';
 // import MoonIcon from '@mui/core-downloads-tracker';
 // import SunIcon from '@mui/material'
 
@@ -52,18 +52,23 @@ const AppContent = () => {
 
 const App = () => {
     const { dispatch, state } = useTheme();
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
+    // const [showForm, setShowForm] = useState(false);
 
     return (
         <Router>
-            <Box sx={{display: 'flex', alignItems: 'center', gap: 2, width: "fit-content", ml: 'auto'}}>
+            <Box sx={{display: 'flex', alignItems: 'center', gap: 2, width: "100%", mb: '15px'}}>
+                <Typography variant="h4">
+                    Welcome, {user?.username || 'User'}!
+                </Typography>
+
                 <Button
                 type="button"
                 variant="contained"
                 color="primary"
-                sx={{ /*mr: 5, ml: 'auto', mb: 2,*/ display: 'block', position: "relative", bgcolor: state.isDark ? state.lightColor : state.darkColor}}
+                sx={{ display: 'block', position: "relative", ml: 'auto', bgcolor: state.isDark ? state.lightColor : state.darkColor}}
                 onClick={() => { dispatch({type: "switchDark", payload: !state.isDark}) }}
-            >
+                >
                 <Checkbox 
                     checked={state.isDark}
                     color="transparent"
@@ -73,14 +78,26 @@ const App = () => {
                     { state.isDark ?  "Light" : "Dark"}
                 {/* </Icon> */}
             </Button>
+            
             {
                 localStorage.getItem('token') && <Button 
-                    variant="outlined" 
+                    type='button'
+                    variant='contained'
+                    color='warning'
+                    onClick={() => { dispatch({type: "ShowForm", payload: !state.ShowForm}) }}
+                >
+                    Create Todo
+                </Button>
+            }
+            {
+                localStorage.getItem('token') && <Button 
+                    type='button'
+                    variant="contained" 
+                    color='error'
                     onClick={logout}
-                    // sx={{ position: 'absolute', ml: 'auto', top: '15px', right: '25px' }}
                 >
                     Logout
-                </Button>
+                </Button> 
             }
             </Box>
                 <AppContent />
