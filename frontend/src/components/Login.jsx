@@ -51,11 +51,11 @@ const Login = () => {
                 // alert('Login successful!');
             } else {
                 setAlertMsg( {
-                    msg: 'Login failed!!',
+                    msg: '!! Login failed: ' + response.message,
                     payload: 'error'
                 });
                 // alert('Login failed!');
-                console.error('Login error:', response.message);
+                // console.error('Login error:', response.message);
             }
             
         // } catch (error) {

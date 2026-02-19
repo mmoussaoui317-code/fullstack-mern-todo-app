@@ -21,7 +21,7 @@ export function dataFormValidation(dataObjFrom) {
             validity = { valid: false, errors: { ...validity.errors, [key]: `The ${key} Must Be Less Then 1000 Chars` }}; return;
         }
 
-        if(key.toLowerCase() === "email" && !(/\w+@\w+\.com/.test(dataObjFrom[key].trim())) ) {
+        if(key.toLowerCase() === "email" && !(/\w+@\w+\.\S+/.test(dataObjFrom[key].trim())) ) {
             validity = { valid: false, errors: { ...validity.errors, [key]: `The ${key} Format Is Incorrect!` }}; return;
         }
 

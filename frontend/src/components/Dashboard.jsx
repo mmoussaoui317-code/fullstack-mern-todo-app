@@ -60,15 +60,13 @@ const Dashboard = () => {
 
 
     return (
-        // <DarkThemeMUI>
-        <Container maxWidth="md" 
-        // sx={{overflow: 'hidden', padding: 4, borderRadius: 4, position: 'relative', color: state.isDark ? state.lightColor : state.darkColor, bgcolor: state.isDark ? state.darkColor : state.lightColor}}
-        >
-            <Box>
+        <Container maxWidth="md">
+            <header>
                 <Typography variant="h4" gutterBottom>
                     Welcome, {user?.username || 'User'}!
                 </Typography>
-                
+            </header>
+            <Box>
                 {/* Add New Todo  */}
                 <Box sx={{ mb: 4, p: 2/*, bgcolor: state.isDark ? state.secondaryColor : state.lightColor, borderRadius: 1*/ }}>
                     <TextField
@@ -77,11 +75,9 @@ const Dashboard = () => {
                         value={newTodo.title}
                         onChange={(e) => setNewTodo({...newTodo, title: e.target.value})}
                         margin="normal"
-                        // onBlur={() => {validationFrom()}}
                         error={errors.title}
                         helperText={errors.title}
                     />
-                    {/* {  ? <span className={styles.error_span}>{errors.title}</span> : null } */}
 
                     <TextField
                         fullWidth
@@ -89,16 +85,13 @@ const Dashboard = () => {
                         value={newTodo.description}
                         onChange={(e) => setNewTodo({...newTodo, description: e.target.value})}
                         margin="normal"
-                        // onBlur={() => {validationFrom()}}
                         error={errors.description}
                         helperText={errors.description}
                     />
-                    {/* {  ? <span className={styles.error_span}>{errors.title}</span> : null } */}
                     <Button
                         variant="contained"
                         onClick={handleAddTodo}
                         disabled={loading || !newTodo.title.trim()}
-                        // color={state.isDark ? state.lightColor : state.darkColor}
                         sx={{ mt: 2 }}
                     >
                         {loading ? <CircularProgress size={24} /> : 'Add Todo'}
@@ -129,9 +122,7 @@ const Dashboard = () => {
                 {/* <TodoList todos={todos} onReorder={setTodos} /> */}
                 
                 {todos.length === 0 && (
-                    <Typography align="center" 
-                    // sx={{color: state.isDark ? state.lightColor : state.secondaryColor}}
-                    >
+                    <Typography align="center" >
                         No todos yet. Add your first todo!
                     </Typography>
                 )}
@@ -140,8 +131,6 @@ const Dashboard = () => {
                 {/* <DashboardStats todos={ todos || [] } /> */}
             </Box>
         </Container>
-        // {/* </DarkThemeMUI> */}
-
     );
 };
 
