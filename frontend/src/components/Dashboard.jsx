@@ -57,8 +57,8 @@ const Dashboard = () => {
 
 
     return (
-        <Container maxWidth="md">
-            <Box sx={{ position: 'relative', minHeight: '100vh'}}>
+        <Container maxWidth="md" sx={{position: 'relative', "&::before": state.ShowForm && { content: '""', position: 'absolute', top: '0%', left: '0%', width: '100vw', height: '100vh', bgcolor: '#11221151', zIndex: -1}}}>
+            <Box sx={{ position: 'relative', zIndex: 0, minHeight: '100vh'}}>
                 {/* Add New Todo  */}
                 {/* List of Todos */}
                 {/* <List> */}

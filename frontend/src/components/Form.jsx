@@ -32,8 +32,8 @@ export default function Form() {
         }
     };
 
-    return <Box sx={{ mb: 4, p: 2, position: 'absolute', borderRadius: 1, zIndex: 100, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: 10 }}>
-                <CloseIcon onClick={() => {{ dispatch({type: "ShowForm", payload: false}) }}} sx={{ position: 'absolute', top: 4, right: 4, cursor: 'pointer' }} />
+    return <Box sx={{ mb: 4, p: 4, position: 'absolute', borderRadius: 1, zIndex: 10, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: 10 }}>
+                <CloseIcon onClick={() => {{ dispatch({type: "ShowForm", payload: false}) }}} sx={{ position: 'absolute', top: '8px', right: '8px', fontSize: '16px', cursor: 'pointer', transition: '0.3s', color: '#ddd', "&:hover": { fontSize: '20px', color: '#222' }}} />
                 <TextField
                     fullWidth
                     label="Todo Title"
@@ -56,7 +56,6 @@ export default function Form() {
                     variant="contained"
                     onClick={handleAddTodo}
                     disabled={loading || !newTodo.title.trim()}
-                    sx={{ mt: 2 }}
                 >
                     {loading ? <CircularProgress size={24} /> : 'Add Todo'}
                 </Button>

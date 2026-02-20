@@ -85,6 +85,7 @@ const App = () => {
                     variant='contained'
                     color='warning'
                     onClick={() => { dispatch({type: "ShowForm", payload: !state.ShowForm}) }}
+                    sx={{ pointerEvents: state.ShowForm && 'none', opacity: state.ShowForm && '0.3' }}
                 >
                     Create Todo
                 </Button>
